@@ -15,18 +15,14 @@ using System.Windows.Shapes;
 namespace TSSWpf
 {
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    /// Interaction logic for UserWindow.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class UserWindow : Window
     {
-        public AdminWindow()
+        public UserWindow(int userID)
         {
+            //somehow load user data from userID.
             InitializeComponent();
-            this.Closed += new EventHandler(AdminWindowClose);
-        }
-        void AdminWindowClose(object sender, EventArgs e)
-        {
-            System.Windows.MessageBox.Show("Closing window");
         }
     }
 }

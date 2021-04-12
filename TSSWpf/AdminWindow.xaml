@@ -7,7 +7,8 @@
 
         xmlns:local="clr-namespace:TSSWpf"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800">
+        Title="AdminWindow" Height="450" Width="800"
+        Closed="AdminWindowClose">
     <Grid>
         <DataGrid HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="772"/>
         <TabControl HorizontalAlignment="Left" Height="100" Margin="165,245,0,0" VerticalAlignment="Top" Width="100">

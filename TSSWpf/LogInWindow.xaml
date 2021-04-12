@@ -10,7 +10,7 @@
     <Grid>
         <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>
 
-        <Button x:Name="login_button" Content="Log In" HorizontalAlignment="Left" Margin="246,280,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="login_button_Click"/>
+        <Button x:Name="login_button" Content="Log In" HorizontalAlignment="Left" Margin="246,280,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="login_button_Click" IsDefault="True"/>
         <Label Content="Don't have an account?" HorizontalAlignment="Left" Margin="146,325,0,0" VerticalAlignment="Top" Width="191"/>
         <Button x:Name="login_signupButton" Content="Sign Up" HorizontalAlignment="Left" Margin="289,329,0,0" VerticalAlignment="Top" Width="48" Background="Transparent" BorderThickness="0"/>
         <xctk:WatermarkTextBox x:Name="loginUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Enter Username" HorizontalAlignment="Left" Width="200"/>

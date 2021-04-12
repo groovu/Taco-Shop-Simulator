@@ -19,9 +19,9 @@ namespace scratch
             //modify like a normal object
             //profit
             TacoDBEntity taco = new TacoDBEntity();
-           // var table = taco.testTables;
+            var table = taco.logins;
 
-            //var result = table.SingleOrDefault(b => b.id == 1);
+            var result = table.SingleOrDefault(b => b.id == 1);
 
             //result.blah = "1000";
             taco.SaveChanges();
