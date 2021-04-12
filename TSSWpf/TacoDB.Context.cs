@@ -30,5 +30,7 @@ namespace TSSWpf
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<recipe> recipes { get; set; }
         public virtual DbSet<userData> userDatas { get; set; }
+        public virtual DbSet<ingrForRecipe> ingrForRecipes { get; set; }
+        public virtual DbSet<shopStock> shopStocks { get; set; }
     }
 }

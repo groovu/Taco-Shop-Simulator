@@ -2,7 +2,7 @@
 A taco shop management game.
 
 # Todo
-Implement admin system to view and modify user information
+Admin View implemented, add functionality (update users, add ingredients, add recipes)
 
 Figure out how to use an online database.  (How to migrate local db?)
 

@@ -82,8 +82,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Employee.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ingredient.cs">
+      <DependentUpon>TacoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ingrForRecipe.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="login.cs">
@@ -93,6 +97,10 @@
       <DependentUpon>NewUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="recipe.cs">
+      <DependentUpon>TacoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shop.cs" />
+    <Compile Include="shopStock.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">

@@ -12,16 +12,14 @@ namespace TSSWpf
     using System;
     using System.Collections.Generic;
     
-    public partial class userData
+    public partial class shopStock
     {
-        public int id { get; set; }
-        public System.DateTime creation { get; set; }
-        public string username { get; set; }
-        public decimal money { get; set; }
-        public int employees { get; set; }
-        public string shopName { get; set; }
+        public int owner_id { get; set; }
+        public Nullable<int> lettuce { get; set; }
+        public Nullable<int> cheese { get; set; }
+        public Nullable<int> soft_tortilla { get; set; }
+        public Nullable<int> seasoned_beef { get; set; }
     
-        public virtual shopStock shopStock { get; set; }
-        public virtual login login { get; set; }
+        public virtual userData userData { get; set; }
     }
 }

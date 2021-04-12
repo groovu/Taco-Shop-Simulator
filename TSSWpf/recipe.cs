@@ -16,5 +16,7 @@ namespace TSSWpf
     {
         public string recipeName { get; set; }
         public string description { get; set; }
+    
+        public virtual ingrForRecipe ingrForRecipe { get; set; }
     }
 }
