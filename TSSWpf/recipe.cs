@@ -15,7 +15,6 @@ namespace TSSWpf
     public partial class recipe
     {
         public string recipeName { get; set; }
-        public string requiredIngredients { get; set; }
         public string descrtion { get; set; }
     }
 }

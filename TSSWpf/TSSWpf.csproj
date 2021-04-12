@@ -84,38 +84,38 @@
     </ApplicationDefinition>
     <Compile Include="Global.cs" />
     <Compile Include="ingredient.cs">
-      <DependentUpon>TSSdb.tt</DependentUpon>
+      <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="login.cs">
-      <DependentUpon>TSSdb.tt</DependentUpon>
+      <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="NewUser.xaml.cs">
       <DependentUpon>NewUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="recipe.cs">
-      <DependentUpon>TSSdb.tt</DependentUpon>
+      <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>TSSdb.tt</DependentUpon>
+      <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="TSSdb.Context.cs">
+    <Compile Include="TacoDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TSSdb.Context.tt</DependentUpon>
+      <DependentUpon>TacoDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TSSdb.cs">
+    <Compile Include="TacoDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TSSdb.tt</DependentUpon>
+      <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="TSSdb.Designer.cs">
+    <Compile Include="TacoDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TSSdb.edmx</DependentUpon>
+      <DependentUpon>TacoDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="userData.cs">
-      <DependentUpon>TSSdb.tt</DependentUpon>
+      <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
@@ -171,12 +171,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="TSSdb.edmx">
+    <EntityDeploy Include="TacoDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TSSdb.Designer.cs</LastGenOutput>
+      <LastGenOutput>TacoDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="TSSdb.edmx.diagram">
-      <DependentUpon>TSSdb.edmx</DependentUpon>
+    <None Include="TacoDB.edmx.diagram">
+      <DependentUpon>TacoDB.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -187,15 +187,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="taco.ico" />
-    <Content Include="TSSdb.Context.tt">
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TacoDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TSSdb.edmx</DependentUpon>
-      <LastGenOutput>TSSdb.Context.cs</LastGenOutput>
+      <DependentUpon>TacoDB.edmx</DependentUpon>
+      <LastGenOutput>TacoDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="TSSdb.tt">
+    <Content Include="TacoDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TSSdb.edmx</DependentUpon>
-      <LastGenOutput>TSSdb.cs</LastGenOutput>
+      <DependentUpon>TacoDB.edmx</DependentUpon>
+      <LastGenOutput>TacoDB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

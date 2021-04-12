@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="03c7cca5166744bb80973ce43c171b6c" Name="Diagram1">
+      <Diagram DiagramId="9069f9a64b59473ab634fd9bcc49ea63" Name="Diagram1">
         <EntityTypeShape EntityType="TacoDBModel.ingredient" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TacoDBModel.login" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TacoDBModel.recipe" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TacoDBModel.sysdiagram" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TacoDBModel.userData" Width="1.5" PointX="4.75" PointY="2.75" IsExpanded="true" />
-        <AssociationConnector Association="TacoDBModel.FK_userData_login" />
+        <EntityTypeShape EntityType="TacoDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.recipe" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.userData" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

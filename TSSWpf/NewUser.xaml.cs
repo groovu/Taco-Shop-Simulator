@@ -53,7 +53,7 @@ namespace TSSWpf
                 login newUser = new login();
                 newLoginData(newUser, username, password);
                 addUserData(newUser);
-                db.SaveChanges();
+                //db.SaveChanges();
                 System.Windows.MessageBox.Show("Sign up sucessful, returning to log in screen.");
                 loginWin.Show();
                 this.Close();
@@ -68,18 +68,20 @@ namespace TSSWpf
             newUser.username = username;
             newUser.password = password;
             db.logins.Add(newUser);
+            db.SaveChanges();
         }
 
         private void addUserData(login n)
         {
             //User newUser = new User(n.id, n.username); User classs should be loaded in game
             userData newUser = new userData();
-            newUser.userID = n.id;
+            newUser.id = n.id;
             newUser.creation = DateTime.Now;
             newUser.username = n.username;
             newUser.money = 1000;
             newUser.employees = 0;
             db.userDatas.Add(newUser);
+            db.SaveChanges();
         }
     }
 }

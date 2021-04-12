@@ -14,13 +14,10 @@ namespace TSSWpf
     
     public partial class userData
     {
-        public string username { get; set; }
-        public int money { get; set; }
-        public int employees { get; set; }
         public int id { get; set; }
         public System.DateTime creation { get; set; }
-        public string test { get; set; }
-    
-        public virtual login login { get; set; }
+        public string username { get; set; }
+        public decimal money { get; set; }
+        public int employees { get; set; }
     }
 }
