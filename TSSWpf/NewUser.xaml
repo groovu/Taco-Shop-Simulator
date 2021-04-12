@@ -7,8 +7,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="TSSWpf.NewUser"
         mc:Ignorable="d"
         Title="New User" Height="500" Width="500"
-        WindowStartupLocation="Manual"
-        Left="0" Top="0">
+        WindowStartupLocation="CenterScreen">
     <Grid>
 
         <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>

@@ -8,6 +8,7 @@
         xmlns:local="clr-namespace:TSSWpf"
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800"
-        Closed="AdminWindowClose">
+        Closed="AdminWindowClose"
+        WindowStartupLocation="CenterScreen">
     <Grid/>
 </Window>

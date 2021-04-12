@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:TSSWpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Log In" Height="500" Width="500">
+        Title="Log In" Height="500" Width="500"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>
 
@@ -16,7 +17,7 @@
         <xctk:WatermarkTextBox x:Name="loginUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Enter Username" HorizontalAlignment="Left" Width="200"/>
         <xctk:WatermarkPasswordBox x:Name="loginPasswordBox" HorizontalAlignment="Left" Height="23" Margin="146,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Enter Password"/>
         <Separator HorizontalAlignment="Left" Height="15" Margin="146,310,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label Content="Taco Shop Simulator" Margin="133,25,133,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="Taco Shop Simulator" Margin="133,25,125,0" VerticalAlignment="Top" FontSize="24"/>
 
     </Grid>
 </Window>
