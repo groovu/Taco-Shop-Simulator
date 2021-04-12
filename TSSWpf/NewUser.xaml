@@ -1,0 +1,23 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TSSWpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="TSSWpf.NewUser"
+        mc:Ignorable="d"
+        Title="New User" Height="500" Width="500"
+        WindowStartupLocation="Manual"
+        Left="0" Top="0">
+    <Grid>
+
+        <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>
+
+        <Button x:Name="signUpButton" Content="Sign up" HorizontalAlignment="Left" Margin="246,308,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="signUpClick"/>
+        <xctk:WatermarkTextBox x:Name="signupUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Choose Username" HorizontalAlignment="Left" Width="200"/>
+        <xctk:WatermarkPasswordBox x:Name="signupPasswordBox" HorizontalAlignment="Left" Height="23" Margin="146,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Enter Password"/>
+        <xctk:WatermarkPasswordBox x:Name="signupPasswordConfirmBox" HorizontalAlignment="Left" Height="23" Margin="146,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Confirm Password"/>
+        <Button x:Name="signupCancel" Content="Cancel" HorizontalAlignment="Left" Margin="125,365,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="cancelSignup" KeyboardNavigation.IsTabStop="False"/>
+
+    </Grid>
+</Window>

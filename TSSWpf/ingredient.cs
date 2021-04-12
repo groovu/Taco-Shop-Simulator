@@ -16,5 +16,6 @@ namespace TSSWpf
     {
         public string ingredient1 { get; set; }
         public string description { get; set; }
+        public Nullable<decimal> cost { get; set; }
     }
 }

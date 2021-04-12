@@ -29,7 +29,6 @@ namespace TSSWpf
         public virtual DbSet<login> logins { get; set; }
         public virtual DbSet<recipe> recipes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<test> tests { get; set; }
         public virtual DbSet<userData> userDatas { get; set; }
     }
 }

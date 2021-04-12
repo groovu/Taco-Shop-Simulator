@@ -19,7 +19,7 @@ namespace TSSWpf
     /// </summary>
     public partial class UserWindow : Window
     {
-        public UserWindow(int userID)
+        public UserWindow(TacoDBEntity db, int userID)
         {
             //somehow load user data from userID.
             InitializeComponent();

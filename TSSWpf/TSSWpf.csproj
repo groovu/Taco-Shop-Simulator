@@ -85,13 +85,13 @@
     <Compile Include="login.cs">
       <DependentUpon>TSSdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="NewUser.xaml.cs">
+      <DependentUpon>NewUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="recipe.cs">
       <DependentUpon>TSSdb.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>TSSdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="test.cs">
       <DependentUpon>TSSdb.tt</DependentUpon>
     </Compile>
     <Compile Include="TSSdb.Context.cs">
@@ -134,6 +134,10 @@
       <DependentUpon>LogInWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

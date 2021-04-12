@@ -17,5 +17,6 @@ namespace TSSWpf
         public string username { get; set; }
         public int money { get; set; }
         public int employees { get; set; }
+        public int userID { get; set; }
     }
 }

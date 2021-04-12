@@ -5,12 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TacoDB.dbo.ingredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ingredients">
           <Key>
             <PropertyRef Name="ingredient" />
           </Key>
-          <Property Name="ingredient" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="description" Type="text" />
+          <Property Name="ingredient" Type="varchar(max)" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="login">
           <Key>
@@ -38,27 +41,39 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="test">
-          <Key>
-            <PropertyRef Name="test" />
-          </Key>
-          <Property Name="test" Type="nchar" MaxLength="10" Nullable="false" />
-        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="userData">
           <Key>
+            <PropertyRef Name="userID" />
             <PropertyRef Name="username" />
+            
+            
           </Key>
+          <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="money" Type="int" Nullable="false" />
           <Property Name="employees" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TacoDBModelStoreContainer">
-          <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="test" EntityType="Self.test" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="userData" EntityType="Self.userData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ingredients].[ingredient] AS [ingredient], 
+    [ingredients].[description] AS [description], 
+    [ingredients].[cost] AS [cost]
+    FROM [dbo].[ingredients] AS [ingredients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="userData" EntityType="Self.userData" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [userData].[userID] AS [userID], 
+    [userData].[username] AS [username], 
+    [userData].[money] AS [money], 
+    [userData].[employees] AS [employees]
+    FROM [dbo].[userData] AS [userData]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -68,8 +83,9 @@
           <Key>
             <PropertyRef Name="ingredient1" />
           </Key>
-          <Property Name="ingredient1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ingredient1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="login">
           <Key>
@@ -97,26 +113,21 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="test">
-          <Key>
-            <PropertyRef Name="test1" />
-          </Key>
-          <Property Name="test1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="userData">
           <Key>
             <PropertyRef Name="username" />
+            <PropertyRef Name="userID" />
           </Key>
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="money" Type="Int32" Nullable="false" />
           <Property Name="employees" Type="Int32" Nullable="false" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TacoDBEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ingredients" EntityType="Self.ingredient" />
           <EntitySet Name="logins" EntityType="Self.login" />
           <EntitySet Name="recipes" EntityType="Self.recipe" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="tests" EntityType="Self.test" />
           <EntitySet Name="userDatas" EntityType="Self.userData" />
         </EntityContainer>
       </Schema>
@@ -128,6 +139,7 @@
           <EntitySetMapping Name="ingredients">
             <EntityTypeMapping TypeName="TacoDBModel.ingredient">
               <MappingFragment StoreEntitySet="ingredients">
+                <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="ingredient1" ColumnName="ingredient" />
                 <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
@@ -162,16 +174,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tests">
-            <EntityTypeMapping TypeName="TacoDBModel.test">
-              <MappingFragment StoreEntitySet="test">
-                <ScalarProperty Name="test1" ColumnName="test" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="userDatas">
             <EntityTypeMapping TypeName="TacoDBModel.userData">
               <MappingFragment StoreEntitySet="userData">
+                <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="money" ColumnName="money" />
                 <ScalarProperty Name="employees" ColumnName="employees" />

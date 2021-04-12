@@ -38,13 +38,13 @@ namespace TSSWpf
                 if (result.admin)
                 {
                     this.Hide();
-                    Window adminWin = new AdminWindow();
+                    Window adminWin = new AdminWindow(db);
                     adminWin.Show();
                 } else
                 {
                     //get user data, load user data, show window with user data.
                     this.Hide();
-                    Window userWin = new UserWindow(result.id);
+                    Window userWin = new UserWindow(db, result.id);
                     userWin.Show();
                 }
             }
@@ -55,6 +55,14 @@ namespace TSSWpf
             {
                 System.Windows.MessageBox.Show("Program is in debug mode");
             } 
+        }
+
+        private void login_signupButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Window signUpWin = new NewUser(db, this);
+            signUpWin.Show();
+            
         }
     }
 }

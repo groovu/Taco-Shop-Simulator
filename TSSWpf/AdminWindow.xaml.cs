@@ -19,7 +19,7 @@ namespace TSSWpf
     /// </summary>
     public partial class AdminWindow : Window
     {
-        public AdminWindow()
+        public AdminWindow(TacoDBEntity db)
         {
             InitializeComponent();
             this.Closed += new EventHandler(AdminWindowClose);

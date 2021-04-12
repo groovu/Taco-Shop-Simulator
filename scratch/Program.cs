@@ -18,13 +18,13 @@ namespace scratch
             //retrieve row using lambda fxn
             //modify like a normal object
             //profit
-            TacoDBEntity taco = new TacoDBEntity();
-            var table = taco.logins;
+            //tacodbentity taco = new tacodbentity();
+            //var table = taco.logins;
 
-            var result = table.SingleOrDefault(b => b.id == 1);
+            //var result = table.singleordefault(b => b.id == 1);
 
             //result.blah = "1000";
-            taco.SaveChanges();
+            //taco.SaveChanges();
 
             string username;
             string password;
