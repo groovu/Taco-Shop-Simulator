@@ -13,10 +13,10 @@ namespace scratch
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TacoDBEntities : DbContext
+    public partial class TacoDBEntity : DbContext
     {
-        public TacoDBEntities()
-            : base("name=TacoDBEntities")
+        public TacoDBEntity()
+            : base("name=TacoDBEntity")
         {
         }
     
@@ -25,7 +25,11 @@ namespace scratch
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ingredient> ingredients { get; set; }
+        public virtual DbSet<recipe> recipes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<testTable> testTables { get; set; }
+        public virtual DbSet<login> logins { get; set; }
+        public virtual DbSet<userData> userDatas { get; set; }
+        public virtual DbSet<test> tests { get; set; }
     }
 }

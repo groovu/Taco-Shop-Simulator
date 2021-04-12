@@ -1,0 +1,22 @@
+﻿<Window x:Name="LoginWindow" x:Class="TSSWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TSSWpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Log In" Height="500" Width="500">
+    <Grid>
+        <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>
+
+        <Button x:Name="login_button" Content="Log In" HorizontalAlignment="Left" Margin="246,280,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas"/>
+        <Label Content="Don't have an account?" HorizontalAlignment="Left" Margin="146,325,0,0" VerticalAlignment="Top" Width="191"/>
+        <Button x:Name="login_signupButton" Content="Sign Up" HorizontalAlignment="Left" Margin="289,329,0,0" VerticalAlignment="Top" Width="48" Background="Transparent" BorderThickness="0"/>
+        <xctk:WatermarkTextBox x:Name="loginUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Enter Username" HorizontalAlignment="Left" Width="200"/>
+        <xctk:WatermarkTextBox x:Name="loginPasswordBox" HorizontalAlignment="Left" Height="23" Margin="146,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Enter Password"/>
+        <Separator HorizontalAlignment="Left" Height="15" Margin="146,310,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Taco Shop Simulator" Margin="133,25,133,0" VerticalAlignment="Top" FontSize="24"/>
+
+    </Grid>
+</Window>

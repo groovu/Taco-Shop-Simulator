@@ -12,10 +12,9 @@ namespace scratch
     using System;
     using System.Collections.Generic;
     
-    public partial class testTable
+    public partial class recipe
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string blah { get; set; }
+        public string recipeName { get; set; }
+        public string requiredIngredients { get; set; }
     }
 }

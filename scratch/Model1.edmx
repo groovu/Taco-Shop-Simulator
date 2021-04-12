@@ -4,7 +4,30 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ingredients">
+          <Key>
+            <PropertyRef Name="ingredient" />
+          </Key>
+          <Property Name="ingredient" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="text" />
+        </EntityType>
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="text" />
+          <Property Name="admin" Type="bit" />
+        </EntityType>
+        <EntityType Name="recipes">
+          <Key>
+            <PropertyRef Name="recipeName" />
+          </Key>
+          <Property Name="recipeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="requiredIngredients" Type="text" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -15,23 +38,46 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="testTable">
+        <EntityType Name="test">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="test" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="text" />
-          <Property Name="blah" Type="nchar" MaxLength="10" />
+          <Property Name="test" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userData">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="money" Type="int" Nullable="false" />
+          <Property Name="employees" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TacoDBModelStoreContainer">
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="testTable" EntityType="Self.testTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test" EntityType="Self.test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userData" EntityType="Self.userData" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TacoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ingredient">
+          <Key>
+            <PropertyRef Name="ingredient1" />
+          </Key>
+          <Property Name="ingredient1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="recipe">
+          <Key>
+            <PropertyRef Name="recipeName" />
+          </Key>
+          <Property Name="recipeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="requiredIngredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -42,24 +88,64 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="testTable">
+        <EntityType Name="login">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="blah" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="usernam" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="admin" Type="Boolean" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="TacoDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="userData">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="employees" />
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="userid" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="money" Type="Int32" Nullable="false" />
+          <Property Name="employees" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="TacoDBEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ingredients" EntityType="Self.ingredient" />
+          <EntitySet Name="recipes" EntityType="Self.recipe" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="testTables" EntityType="Self.testTable" />
+          <EntitySet Name="logins" EntityType="Self.login" />
+          <EntitySet Name="userDatas" EntityType="Self.userData" />
+          <EntitySet Name="tests" EntityType="TacoDBModel.test" />
         </EntityContainer>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="test1" />
+          </Key>
+          <Property Name="test1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TacoDBModelStoreContainer" CdmEntityContainer="TacoDBEntities">
+        <EntityContainerMapping StorageEntityContainer="TacoDBModelStoreContainer" CdmEntityContainer="TacoDBEntity">
+          <EntitySetMapping Name="ingredients">
+            <EntityTypeMapping TypeName="TacoDBModel.ingredient">
+              <MappingFragment StoreEntitySet="ingredients">
+                <ScalarProperty Name="ingredient1" ColumnName="ingredient" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipes">
+            <EntityTypeMapping TypeName="TacoDBModel.recipe">
+              <MappingFragment StoreEntitySet="recipes">
+                <ScalarProperty Name="recipeName" ColumnName="recipeName" />
+                <ScalarProperty Name="requiredIngredients" ColumnName="requiredIngredients" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="TacoDBModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -71,12 +157,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="testTables">
-            <EntityTypeMapping TypeName="TacoDBModel.testTable">
-              <MappingFragment StoreEntitySet="testTable">
+          <EntitySetMapping Name="logins">
+            <EntityTypeMapping TypeName="TacoDBModel.login">
+              <MappingFragment StoreEntitySet="login">
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="blah" ColumnName="blah" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="admin" ColumnName="admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userDatas">
+            <EntityTypeMapping TypeName="TacoDBModel.userData">
+              <MappingFragment StoreEntitySet="userData">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="employees" ColumnName="employees" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tests">
+            <EntityTypeMapping TypeName="TacoDBModel.test">
+              <MappingFragment StoreEntitySet="test">
+                <ScalarProperty Name="test1" ColumnName="test" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
