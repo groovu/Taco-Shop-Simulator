@@ -8,7 +8,8 @@
         Title="Taco Shop Simulator" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Label x:Name="userLabel" Content="Hi" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 
 </Window>

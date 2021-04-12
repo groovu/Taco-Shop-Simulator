@@ -22,5 +22,9 @@ namespace TSSWpf
             money = 1000;
             employees = 0;
         }
+        public User()
+        {
+
+        }
     }
 }

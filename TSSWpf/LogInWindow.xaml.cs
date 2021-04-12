@@ -46,7 +46,7 @@ namespace TSSWpf
                 {
                     //get user data, load user data, show window with user data.
                     this.Hide();
-                    Window userWin = new UserWindow(db, result.id);
+                    Window userWin = new UserWindow(db, result.id, this);
                     userWin.Show();
                 }
                 clearFields();

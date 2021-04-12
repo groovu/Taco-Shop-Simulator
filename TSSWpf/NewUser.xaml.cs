@@ -51,9 +51,12 @@ namespace TSSWpf
             {
                 int newId = db.logins.Max(i => i.id) + 1;
                 login newUser = new login();
+
                 newLoginData(newUser, username, password);
                 addUserData(newUser);
-                //db.SaveChanges();
+                // I should add error checking here.  make sure previous two succeeded o/w clear additions.
+                var blah = db.ChangeTracker.Entries(); //right track, check length == 2; else iterate through entries and remove.
+                db.SaveChanges();
                 System.Windows.MessageBox.Show("Sign up sucessful, returning to log in screen.");
                 loginWin.Show();
                 this.Close();
@@ -68,7 +71,7 @@ namespace TSSWpf
             newUser.username = username;
             newUser.password = password;
             db.logins.Add(newUser);
-            db.SaveChanges();
+            //db.SaveChanges();
         }
 
         private void addUserData(login n)
@@ -81,7 +84,7 @@ namespace TSSWpf
             newUser.money = 1000;
             newUser.employees = 0;
             db.userDatas.Add(newUser);
-            db.SaveChanges();
+            //db.SaveChanges();
         }
     }
 }
