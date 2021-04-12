@@ -12,7 +12,9 @@ namespace TSSWpf
     public partial class MainWindow : Window
     {
         bool debug = true;
-        TacoDBEntity db = new TacoDBEntity(); 
+        TacoDBEntity db = new TacoDBEntity();
+        //Global test = new Global(); //global db access how?  vs. passing the ref through each window
+       
 
         public MainWindow()
         {

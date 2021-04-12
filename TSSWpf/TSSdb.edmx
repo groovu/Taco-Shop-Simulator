@@ -5,13 +5,11 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'TacoDB.dbo.ingredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ingredients">
           <Key>
             <PropertyRef Name="ingredient" />
           </Key>
-          <Property Name="ingredient" Type="varchar(max)" Nullable="false" />
+          <Property Name="ingredient" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="description" Type="varchar(max)" />
           <Property Name="cost" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
@@ -20,16 +18,18 @@ warning 6002: The table/view 'TacoDB.dbo.ingredients' does not have a primary ke
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar(max)" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="password" Type="varchar(max)" Nullable="false" />
           <Property Name="admin" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TacoDB.dbo.recipes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="recipes">
           <Key>
             <PropertyRef Name="recipeName" />
           </Key>
-          <Property Name="recipeName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="requiredIngredients" Type="text" />
+          <Property Name="recipeName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descrtion" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -45,33 +45,37 @@ warning 6002: The table/view 'TacoDB.dbo.ingredients' does not have a primary ke
 warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="userData">
           <Key>
-            <PropertyRef Name="userID" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="creation" />
             <PropertyRef Name="username" />
             
             
           </Key>
-          <Property Name="userID" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="money" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="creation" Type="datetime" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="money" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="employees" Type="int" Nullable="false" />
+          <Property Name="test" Type="text" />
         </EntityType>
         <EntityContainer Name="TacoDBModelStoreContainer">
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ingredients" EntityType="Self.ingredients" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="recipes" EntityType="Self.recipes" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [ingredients].[ingredient] AS [ingredient], 
-    [ingredients].[description] AS [description], 
-    [ingredients].[cost] AS [cost]
-    FROM [dbo].[ingredients] AS [ingredients]</DefiningQuery>
+    [recipes].[recipeName] AS [recipeName], 
+    [recipes].[descrtion] AS [descrtion]
+    FROM [dbo].[recipes] AS [recipes]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="userData" EntityType="Self.userData" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [userData].[userID] AS [userID], 
+    [userData].[id] AS [id], 
+    [userData].[creation] AS [creation], 
     [userData].[username] AS [username], 
     [userData].[money] AS [money], 
-    [userData].[employees] AS [employees]
+    [userData].[employees] AS [employees], 
+    [userData].[test] AS [test]
     FROM [dbo].[userData] AS [userData]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -83,7 +87,7 @@ warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key d
           <Key>
             <PropertyRef Name="ingredient1" />
           </Key>
-          <Property Name="ingredient1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ingredient1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cost" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
@@ -92,16 +96,18 @@ warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key d
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="admin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="userDatas" Relationship="TacoDBModel.FK_userData_login" FromRole="login" ToRole="userData" />
         </EntityType>
         <EntityType Name="recipe">
           <Key>
             <PropertyRef Name="recipeName" />
           </Key>
-          <Property Name="recipeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="recipeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="requiredIngredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="descrtion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -116,12 +122,16 @@ warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key d
         <EntityType Name="userData">
           <Key>
             <PropertyRef Name="username" />
-            <PropertyRef Name="userID" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="creation" />
           </Key>
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="money" Type="Int32" Nullable="false" />
           <Property Name="employees" Type="Int32" Nullable="false" />
-          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="creation" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="login" Relationship="TacoDBModel.FK_userData_login" FromRole="userData" ToRole="login" />
+          <Property Name="test" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="TacoDBEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ingredients" EntityType="Self.ingredient" />
@@ -129,7 +139,23 @@ warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key d
           <EntitySet Name="recipes" EntityType="Self.recipe" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="userDatas" EntityType="Self.userData" />
+          <AssociationSet Name="FK_userData_login" Association="TacoDBModel.FK_userData_login">
+            <End Role="login" EntitySet="logins" />
+            <End Role="userData" EntitySet="userDatas" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_userData_login">
+          <End Type="TacoDBModel.login" Role="login" Multiplicity="1" />
+          <End Type="TacoDBModel.userData" Role="userData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userData">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -158,8 +184,8 @@ warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key d
           <EntitySetMapping Name="recipes">
             <EntityTypeMapping TypeName="TacoDBModel.recipe">
               <MappingFragment StoreEntitySet="recipes">
+                <ScalarProperty Name="descrtion" ColumnName="descrtion" />
                 <ScalarProperty Name="recipeName" ColumnName="recipeName" />
-                <ScalarProperty Name="requiredIngredients" ColumnName="requiredIngredients" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -177,7 +203,9 @@ warning 6002: The table/view 'TacoDB.dbo.userData' does not have a primary key d
           <EntitySetMapping Name="userDatas">
             <EntityTypeMapping TypeName="TacoDBModel.userData">
               <MappingFragment StoreEntitySet="userData">
-                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="test" ColumnName="test" />
+                <ScalarProperty Name="creation" ColumnName="creation" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="money" ColumnName="money" />
                 <ScalarProperty Name="employees" ColumnName="employees" />

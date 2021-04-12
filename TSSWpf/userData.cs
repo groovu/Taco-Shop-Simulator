@@ -17,6 +17,10 @@ namespace TSSWpf
         public string username { get; set; }
         public int money { get; set; }
         public int employees { get; set; }
-        public int userID { get; set; }
+        public int id { get; set; }
+        public System.DateTime creation { get; set; }
+        public string test { get; set; }
+    
+        public virtual login login { get; set; }
     }
 }
