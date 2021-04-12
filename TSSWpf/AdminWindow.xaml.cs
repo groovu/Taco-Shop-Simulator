@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +21,32 @@ namespace TSSWpf
     /// </summary>
     public partial class AdminWindow : Window
     {
-        public AdminWindow(TacoDBEntity db)
+        MainWindow prevWindow;
+        public AdminWindow(TacoDBEntity db, MainWindow window)
         {
             InitializeComponent();
+            prevWindow = window;
             this.Closed += new EventHandler(AdminWindowClose);
+
+            //adminUserGrid.DataContext = db.userDatas.Local;
+            //DataTable blah = db.userDatas.Fill
+            //adminUserGrid.DataContext = db.userDatas.SingleOrDefault(i => i.id == 3);
+            //var blah = db.userDatas.OrderBy(a => a.id);
+            //var blah = db.userDatas.Sql;
+            var blah = db.userDatas.SingleOrDefault(i => i.id == 3); //fetches row
+            var blah2 = from item in  db.userDatas select item;
+            var query = db.userDatas.Where(x => true).ToList();
+
+            adminUserGrid.ItemsSource = query.ToList();
+            adminIngrGrid.ItemsSource = db.ingredients.Where(x => true).ToList();
+            adminRecpGrid.ItemsSource = db.recipes.Where(x => true).ToList();
+           
+            
         }
         void AdminWindowClose(object sender, EventArgs e)
         {
-            System.Windows.MessageBox.Show("Closing window");
+            //System.Windows.MessageBox.Show("Closing window");
+            prevWindow.Show();
         }
     }
 }

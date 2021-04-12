@@ -9,5 +9,24 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
-    <Grid/>
+    <Grid>
+        <TabControl HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
+            <TabItem Header="Users">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="adminUserGrid" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="766">
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Ingredients">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="adminIngrGrid" HorizontalAlignment="Left" Height="185" VerticalAlignment="Top" Width="766"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Recipes" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="adminRecpGrid" HorizontalAlignment="Left" Height="190" VerticalAlignment="Top" Width="766"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>

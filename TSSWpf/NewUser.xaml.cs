@@ -46,7 +46,7 @@ namespace TSSWpf
             var result = db.logins.SingleOrDefault(i => i.username == username);
             if (result != null)
             {
-                System.Windows.MessageBox.Show("Username has already been selected.");
+                System.Windows.MessageBox.Show("Username has already been taken.");
             } else
             {
                 int newId = db.logins.Max(i => i.id) + 1;

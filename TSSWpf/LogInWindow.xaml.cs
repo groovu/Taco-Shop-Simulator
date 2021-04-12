@@ -40,7 +40,7 @@ namespace TSSWpf
                 if (result.admin)
                 {
                     this.Hide();
-                    Window adminWin = new AdminWindow(db);
+                    Window adminWin = new AdminWindow(db, this);
                     adminWin.Show();
                 } else
                 {
@@ -49,6 +49,7 @@ namespace TSSWpf
                     Window userWin = new UserWindow(db, result.id);
                     userWin.Show();
                 }
+                clearFields();
             }
         }
         private void debugCheck(bool debug)
@@ -65,6 +66,11 @@ namespace TSSWpf
             Window signUpWin = new NewUser(db, this);
             signUpWin.Show();
             
+        }
+        private void clearFields()
+        {
+            loginUsernameBox.Clear();
+            loginPasswordBox.Clear();
         }
     }
 }
