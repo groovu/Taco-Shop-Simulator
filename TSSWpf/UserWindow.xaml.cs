@@ -65,8 +65,9 @@ namespace TSSWpf
             //shopQ is bootleg, delete shopStock table and just add it to userData?
             currentStockGrid.ItemsSource = shop.StockPrint();
             knownRecipesGrid.ItemsSource = shop.recipes;
-            var x = (from a in db.ingredients select a.ingredient).ToList();
-            placeOrderGrid.ItemsSource = x; //WHYYYY
+            List<string> ingrList = (from a in db.ingredients select a.ingredient).ToList();
+            Utils u = new Utils();
+            placeOrderGrid.ItemsSource = u.makeDict(ingrList); //WHYYYY
         }
         private Shop GetShop(User user)
         {

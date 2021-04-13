@@ -14,7 +14,9 @@
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="currentStockGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0"/>
                     <Label Content="Current Stock" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <DataGrid x:Name="placeOrderGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="347,26,0,0"/>
+                    <DataGrid x:Name="placeOrderGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="347,26,0,0"
+                              />
+
                     <Label Content="Place Order" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,0,0,0"/>
                     <Button Content="Buy" HorizontalAlignment="Left" Margin="681,310,0,0" VerticalAlignment="Top" Width="75" />
                     <Label HorizontalAlignment="Left" Margin="696,220,0,0" VerticalAlignment="Top">
