@@ -19,5 +19,14 @@ namespace TSSWpf
         {
 
         }
+        public Dictionary<string, int> StockPrint()
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach(var i in stock)
+            {
+                dict.Add(i.Key.ingredient, i.Value);
+            }
+            return dict;
+        }
     }
 }

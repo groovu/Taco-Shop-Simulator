@@ -57,72 +57,81 @@ namespace TSSWpf
             user.employees = userQ.employees;
             user.money = userQ.money;
             user.recipes = userQ.learnedRecipes;
+            user.shopName = userQ.shopName;
             return user;
         }
         private void populateData(Shop shop)
         {
             //shopQ is bootleg, delete shopStock table and just add it to userData?
-            currentStockGrid.ItemsSource = null;
+            currentStockGrid.ItemsSource = shop.StockPrint();
+            knownRecipesGrid.ItemsSource = shop.recipes;
+            var x = (from a in db.ingredients select a.ingredient).ToList();
+            placeOrderGrid.ItemsSource = x; //WHYYYY
         }
         private Shop GetShop(User user)
         {
-            var shopQ = db.shopStock.SingleOrDefault(i => i.owner_id == user.id && i.ingredient == "lettuce");
-            var columns = shopQ.GetType().GetFields();
-            if (shopQ == null)
-            {
-                throw new NotImplementedException("user does not have shop, create shop.");
-            }
+            //what if its a new user?  what would the be missing?
+            //Shop Name
+            //stock would be empty, thats ok.
+            //employees = 0 for new user.
+            //recipes would also be empty.  ok, no problem.
             var shop = new Shop();
             shop.Owner = user;
-
-            var items = db.shopStock.Select(i => i.owner_id == user.id).ToList();
-            
-            foreach(var item in columns)
-            {
-                //db.shopStocks.Select
-                //shop.stock.Add(item, db.shopStocks.Select())
-            }
-
-            //foreach(var property in shopQ.GetType().GetProperties())
+            shop.ShopName = user.shopName;
+            //var prop = shopQ.GetType().GetProperty(ingr);
+            //if (prop == null)
             //{
-            //    //var test = shopQ.GetType().GetProperty("seasoned beef");
-            //    var test2 = test.GetValue(shopQ);
-            //    var blah = property.GetValue(shopQ);
-            //    //shop.stock.Add(property, shopQ.property.get);
+            //    continue;
             //}
-            //String[] items2 = new string[] { "cheese", "lettuce", "seasoned beef" };
+            //var ing = db.ingredients.Single(i => i.ingredient == ingr);
+            //var count = prop.GetValue(shopQ);
+            // good exercise on reflection.
 
-            List<string> list = (from a in db.ingredients select a.ingredient).ToList();
-            foreach (string s in list) //iterates through all ingredients from db.
+            //populates shop ingredients and count from dbo.
+            if (db.shopStock.Select(i => i.owner_id == user.id) == null)
             {
-
-                var prop = shopQ.GetType().GetProperty(s);
-                if (prop == null)
-                {
-                    continue;
-                }
-                var ing = db.ingredients.Single(i => i.ingredient == s);
-                var count = prop.GetValue(shopQ);
-                shop.stock.Add(ing, (int)count);
-
-
+                //do nothing.
             }
+            else //add ingredient stock
+            {
+                List<string> ingrList = (from a in db.ingredients select a.ingredient).ToList();
+                foreach (string ingr in ingrList) //iterates through all ingredients from db.
+                {
+                    var instock = db.shopStock.SingleOrDefault(i => i.owner_id == user.id && i.ingredient == ingr); //gets shops ing, stock query
+                    var ing = db.ingredients.Single(i => i.ingredient == ingr);
+
+                    if (instock == null)
+                    {
+                        shop.stock.Add(ing, 0);
+                    }
+                    else
+                    {
+                        shop.stock.Add(ing, instock.stock);
+                    }
+                }
+            }
+
             //shop.employees = user.employees; //List<Employee>, employees not implemented yet.  maybe another time.
             shop.employees = user.employees;
 
-            //List<string> recipeList = (from a in db.recipes)
-            List<string> knownRecipes = user.recipes.Split(',').ToList();
-            foreach (string recipe in knownRecipes)
+            //populates recipes from userData recipe column.
+            if (user.recipes.Length == 0)
             {
-                var rec = db.recipes.Single(i => i.name == recipe);
-                if (rec == null)
-                {
-                    throw new Exception("recipe is missing from recipe db. bad name?");
-                }
-                shop.recipes.Add(rec);
+                //do nothing
             }
-
-            
+            else //add recipes
+            {
+                List<string> knownRecipes = user.recipes.Split(',').ToList();
+                foreach (string recipe in knownRecipes)
+                {
+                    var rec = db.recipes.Single(i => i.name == recipe);
+                    if (rec == null)
+                    {
+                        throw new Exception("recipe is missing from recipe db. bad name?");
+                    }
+                    shop.recipes.Add(rec);
+                }
+            }
             return shop;
         }
 

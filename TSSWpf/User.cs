@@ -14,6 +14,7 @@ namespace TSSWpf
         public decimal money { get; set; }
         public int employees {get; set;}
         public string recipes { get; set; }
+        public string shopName { get; set; }
 
         public User(int id, string username) //new User constructor
         {
