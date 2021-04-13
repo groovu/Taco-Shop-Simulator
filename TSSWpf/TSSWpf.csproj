@@ -83,7 +83,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Employee.cs" />
-    <Compile Include="Global.cs" />
+    <Compile Include="g.cs" />
     <Compile Include="ingredients.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>

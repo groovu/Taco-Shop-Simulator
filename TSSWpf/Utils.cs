@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TSSWpf
 {
-    public class Utils
+    public static class Utils
     {
         //turn a list into a dict.  used for making buy menu
-        public Dictionary<string, int> makeDict(List<String> list)
+        public static Dictionary<string, int> makeDict(List<String> list)
         {
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach(string s in list)
@@ -17,6 +17,12 @@ namespace TSSWpf
                 dict.Add(s, 0);
             }
             return dict;
+        }
+        //borked, dont use this.
+        public static List<string> makeList(IQueryable q)
+        {
+            List<string> ret = new List<string>();
+            return ret;
         }
     }
 }

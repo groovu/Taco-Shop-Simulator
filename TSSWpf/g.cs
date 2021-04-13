@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TSSWpf
 {
-    class Global
+    public static class g
     {
         public static TacoDBEntity db;
+
     }
 }
