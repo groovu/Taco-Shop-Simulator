@@ -157,19 +157,23 @@ namespace TSSWpf
         }
         private void buyClick(object sender, RoutedEventArgs e)
         {
-            //sub cost from money on hand
-            //update user invetory with selected items
-            //clear buy menu.
+            if(user.money < (decimal)costLabel.Content)
+            {
+                MessageBox.Show("You do not have enough money");
+                return;
+            } else
+            {
+                shop.updateStock((List<buyItem>)placeOrderGrid.ItemsSource, db);
+                user.money -= (decimal)costLabel.Content;
+                moneyLabel.Content = user.money;
+                currentStockGrid.ItemsSource = shop.StockPrint();
+                placeOrderGrid.ItemsSource = placeOrderBuilder();
+            }
+
         }
         private List<buyItem> placeOrderBuilder()
         {
-            //2d array?
-            //all Ingredients
-            //IDictionary<string, int> menu = new Dictionary<string, int>();
-            //foreach (string i in allIngr)
-            //{
-            //    menu.Add(i, 0);
-            //}
+
             List<buyItem> menu = new List<buyItem>();
                 foreach(string i in allIngr)
             {
@@ -205,6 +209,26 @@ namespace TSSWpf
                 throw new Exception("user is missing from userData.");
             }
             q.money = user.money;
+            foreach(KeyValuePair<string, int> ingr in shop.StockPrint())
+            {
+                var stockQ = (from u in db.shopStock where u.owner_id == user.id && u.ingredient == ingr.Key select u).SingleOrDefault();
+                if (stockQ == null)
+                {
+                    shopStock newItem = new shopStock();
+                    newItem.owner_id = user.id;
+                    newItem.ingredient = ingr.Key;
+                    newItem.stock = ingr.Value;
+                    newItem.ingredients = (from u in db.ingredients where u.ingredient == ingr.Key select u).FirstOrDefault();
+                    newItem.userData = (from u in db.userData where u.id == user.id select u).FirstOrDefault();
+                    shopStock itemTest = (from u in db.shopStock where u.ingredient == "cheese" select u).FirstOrDefault();
+                    db.shopStock.Add(newItem);
+                    //throw new Exception("error fetching shopStock query.");
+                }
+                else
+                {
+                    stockQ.stock = ingr.Value;
+                }
+            }
             db.SaveChanges();
             prevWin.Show();
 

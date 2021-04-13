@@ -30,7 +30,7 @@ namespace TSSWpf
 
             //adminUserGrid.DataContext = db.userDatas.Local;
             //DataTable blah = db.userDatas.Fill
-            //adminUserGrid.DataContext = db.userDatas.SingleOrDefault(i => i.id == 3);
+            //adminUssdsderGrid.DataContext = db.userDatas.SingleOrDefault(i => i.id == 3);
             //var blah = db.userDatas.OrderBy(a => a.id);
             //var blah = db.userDatas.Sql;
             var blah = db.userData.SingleOrDefault(i => i.id == 3); //fetches row
