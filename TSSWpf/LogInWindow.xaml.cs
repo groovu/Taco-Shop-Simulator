@@ -26,7 +26,7 @@ namespace TSSWpf
         {
             string user = loginUsernameBox.Text;
             string password = loginPasswordBox.Password; //fix this in the future, use hash instead of checking password.
-            var result = db.logins.SingleOrDefault(i => i.username == user && i.password == password);
+            var result = db.login.SingleOrDefault(i => i.username == user && i.password == password);
             if (result == null)
             {
                 System.Windows.MessageBox.Show("Incorrect username or password");

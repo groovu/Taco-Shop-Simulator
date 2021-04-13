@@ -84,7 +84,7 @@
     </ApplicationDefinition>
     <Compile Include="Employee.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="ingredient.cs">
+    <Compile Include="ingredients.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="login.cs">
@@ -93,14 +93,14 @@
     <Compile Include="NewUser.xaml.cs">
       <DependentUpon>NewUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="recipe.cs">
+    <Compile Include="recipes.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Shop.cs" />
     <Compile Include="shopStock.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="sysdiagrams.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TacoDB.Context.cs">

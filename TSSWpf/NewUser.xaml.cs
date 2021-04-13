@@ -43,13 +43,13 @@ namespace TSSWpf
             {
                 System.Windows.MessageBox.Show("Passwords do not match.");
             }
-            var result = db.logins.SingleOrDefault(i => i.username == username);
+            var result = db.login.SingleOrDefault(i => i.username == username);
             if (result != null)
             {
                 System.Windows.MessageBox.Show("Username has already been taken.");
             } else
             {
-                int newId = db.logins.Max(i => i.id) + 1;
+                int newId = db.login.Max(i => i.id) + 1;
                 login newUser = new login();
 
                 newLoginData(newUser, username, password);
@@ -66,11 +66,11 @@ namespace TSSWpf
         }
         private void newLoginData(login newUser, string username, string password)
         {
-            newUser.id = db.logins.Max(i => i.id) + 1;
+            newUser.id = db.login.Max(i => i.id) + 1;
             newUser.admin = false;
             newUser.username = username;
             newUser.password = password;
-            db.logins.Add(newUser);
+            db.login.Add(newUser);
             //db.SaveChanges();
         }
 
@@ -83,7 +83,7 @@ namespace TSSWpf
             newUser.username = n.username;
             newUser.money = 1000;
             newUser.employees = 0;
-            db.userDatas.Add(newUser);
+            db.userData.Add(newUser);
             //db.SaveChanges();
         }
     }

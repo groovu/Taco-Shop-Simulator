@@ -12,10 +12,10 @@ namespace TSSWpf
     using System;
     using System.Collections.Generic;
     
-    public partial class recipe
+    public partial class recipes
     {
-        public string description { get; set; }
         public string name { get; set; }
+        public string description { get; set; }
         public string ingredients { get; set; }
         public string displayName { get; set; }
         public decimal cost { get; set; }

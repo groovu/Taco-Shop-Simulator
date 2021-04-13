@@ -14,6 +14,12 @@ namespace TSSWpf
     
     public partial class userData
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public userData()
+        {
+            this.shopStock = new HashSet<shopStock>();
+        }
+    
         public int id { get; set; }
         public System.DateTime creation { get; set; }
         public string username { get; set; }
@@ -22,7 +28,8 @@ namespace TSSWpf
         public string shopName { get; set; }
         public string learnedRecipes { get; set; }
     
-        public virtual shopStock shopStock { get; set; }
         public virtual login login { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<shopStock> shopStock { get; set; }
     }
 }

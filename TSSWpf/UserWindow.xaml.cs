@@ -28,7 +28,7 @@ namespace TSSWpf
         public UserWindow(TacoDBEntity db, int id, MainWindow win)
         {
             prevWin = win;
-            var test = db.userDatas.SingleOrDefault(i => i.id == id);
+            var test = db.userData.SingleOrDefault(i => i.id == id);
             this.db = db;
             user = GetUser(id);
             shop = GetShop(user);
@@ -46,7 +46,7 @@ namespace TSSWpf
 
         private User GetUser(int userID) //init User class using userData from table.
         {
-            var userQ = db.userDatas.SingleOrDefault(i => i.id == userID);
+            var userQ = db.userData.SingleOrDefault(i => i.id == userID);
             if (userQ == null)
             {
                 throw new Exception("userdata not found, init user in userdata.");
@@ -61,11 +61,12 @@ namespace TSSWpf
         }
         private void populateData(Shop shop)
         {
-            currentStockGrid.ItemsSource = 
+            //shopQ is bootleg, delete shopStock table and just add it to userData?
+            currentStockGrid.ItemsSource = null;
         }
         private Shop GetShop(User user)
         {
-            var shopQ = db.shopStocks.SingleOrDefault(i => i.owner_id == user.id);
+            var shopQ = db.shopStock.SingleOrDefault(i => i.owner_id == user.id && i.ingredient == "lettuce");
             var columns = shopQ.GetType().GetFields();
             if (shopQ == null)
             {
@@ -74,7 +75,7 @@ namespace TSSWpf
             var shop = new Shop();
             shop.Owner = user;
 
-            var items = db.shopStocks.Select(i => i.owner_id == user.id).ToList();
+            var items = db.shopStock.Select(i => i.owner_id == user.id).ToList();
             
             foreach(var item in columns)
             {
@@ -90,16 +91,17 @@ namespace TSSWpf
             //    //shop.stock.Add(property, shopQ.property.get);
             //}
             //String[] items2 = new string[] { "cheese", "lettuce", "seasoned beef" };
-            List<string> list = (from a in db.ingredients select a.ingredient1).ToList();
 
-            foreach (string s in list)
+            List<string> list = (from a in db.ingredients select a.ingredient).ToList();
+            foreach (string s in list) //iterates through all ingredients from db.
             {
+
                 var prop = shopQ.GetType().GetProperty(s);
                 if (prop == null)
                 {
                     continue;
                 }
-                var ing = db.ingredients.Single(i => i.ingredient1 == s);
+                var ing = db.ingredients.Single(i => i.ingredient == s);
                 var count = prop.GetValue(shopQ);
                 shop.stock.Add(ing, (int)count);
 

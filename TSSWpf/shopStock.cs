@@ -15,11 +15,10 @@ namespace TSSWpf
     public partial class shopStock
     {
         public int owner_id { get; set; }
-        public Nullable<int> lettuce { get; set; }
-        public Nullable<int> cheese { get; set; }
-        public Nullable<int> soft_tortilla { get; set; }
-        public Nullable<int> seasoned_beef { get; set; }
+        public string ingredient { get; set; }
+        public int stock { get; set; }
     
+        public virtual ingredients ingredients { get; set; }
         public virtual userData userData { get; set; }
     }
 }

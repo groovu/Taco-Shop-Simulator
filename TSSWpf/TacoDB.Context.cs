@@ -25,11 +25,11 @@ namespace TSSWpf
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ingredient> ingredients { get; set; }
-        public virtual DbSet<login> logins { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<recipe> recipes { get; set; }
-        public virtual DbSet<userData> userDatas { get; set; }
-        public virtual DbSet<shopStock> shopStocks { get; set; }
+        public virtual DbSet<ingredients> ingredients { get; set; }
+        public virtual DbSet<login> login { get; set; }
+        public virtual DbSet<recipes> recipes { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<userData> userData { get; set; }
+        public virtual DbSet<shopStock> shopStock { get; set; }
     }
 }

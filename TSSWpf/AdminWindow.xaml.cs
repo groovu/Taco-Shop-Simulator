@@ -33,9 +33,9 @@ namespace TSSWpf
             //adminUserGrid.DataContext = db.userDatas.SingleOrDefault(i => i.id == 3);
             //var blah = db.userDatas.OrderBy(a => a.id);
             //var blah = db.userDatas.Sql;
-            var blah = db.userDatas.SingleOrDefault(i => i.id == 3); //fetches row
-            var blah2 = from item in  db.userDatas select item;
-            var query = db.userDatas.Where(x => true).ToList();
+            var blah = db.userData.SingleOrDefault(i => i.id == 3); //fetches row
+            var blah2 = from item in  db.userData select item;
+            var query = db.userData.Where(x => true).ToList();
 
             adminUserGrid.ItemsSource = query.ToList();
             adminIngrGrid.ItemsSource = db.ingredients.Where(x => true).ToList();

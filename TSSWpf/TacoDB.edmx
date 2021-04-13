@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ingredients">
           <Key>
             <PropertyRef Name="ingredient" />
@@ -32,15 +32,17 @@
           <Property Name="displayName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TacoDB.dbo.shopStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="shopStock">
           <Key>
             <PropertyRef Name="owner_id" />
+            <PropertyRef Name="ingredient" />
+            <PropertyRef Name="stock" />
           </Key>
           <Property Name="owner_id" Type="int" Nullable="false" />
-          <Property Name="soft_tortilla" Type="int" />
-          <Property Name="seasoned_beef" Type="int" />
-          <Property Name="lettuce" Type="int" />
-          <Property Name="cheese" Type="int" />
+          <Property Name="ingredient" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -64,9 +66,21 @@
           <Property Name="shopName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="learnedRecipes" Type="text" />
         </EntityType>
+        <Association Name="FK_shopStock_ingredients">
+          <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingredients">
+              <PropertyRef Name="ingredient" />
+            </Principal>
+            <Dependent Role="shopStock">
+              <PropertyRef Name="ingredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_shopStock_userData">
           <End Role="userData" Type="Self.userData" Multiplicity="1" />
-          <End Role="shopStock" Type="Self.shopStock" Multiplicity="0..1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="userData">
               <PropertyRef Name="id" />
@@ -95,9 +109,19 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="shopStock" EntityType="Self.shopStock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userData" EntityType="Self.userData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shopStock" EntityType="Self.shopStock" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [shopStock].[owner_id] AS [owner_id], 
+    [shopStock].[ingredient] AS [ingredient], 
+    [shopStock].[stock] AS [stock]
+    FROM [dbo].[shopStock] AS [shopStock]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
+            <End Role="ingredients" EntitySet="ingredients" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
           <AssociationSet Name="FK_shopStock_userData" Association="Self.FK_shopStock_userData">
             <End Role="userData" EntitySet="userData" />
             <End Role="shopStock" EntitySet="shopStock" />
@@ -107,17 +131,19 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
             <End Role="userData" EntitySet="userData" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TacoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ingredient">
+        <EntityType Name="ingredients">
           <Key>
-            <PropertyRef Name="ingredient1" />
+            <PropertyRef Name="ingredient" />
           </Key>
-          <Property Name="ingredient1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ingredient" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cost" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="shopStock" Relationship="Self.FK_shopStock_ingredients" FromRole="ingredients" ToRole="shopStock" />
         </EntityType>
         <EntityType Name="login">
           <Key>
@@ -127,9 +153,19 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="admin" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="userData" Relationship="TacoDBModel.FK_userData_login1" FromRole="login" ToRole="userData" />
+          <NavigationProperty Name="userData" Relationship="Self.FK_userData_login1" FromRole="login" ToRole="userData" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="recipes">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ingredients" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -138,16 +174,6 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="recipe">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingredients" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="displayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cost" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="userData">
           <Key>
@@ -158,53 +184,38 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="money" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="employees" Type="Int32" Nullable="false" />
-          <Property Name="shopName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="shopStock" Relationship="TacoDBModel.FK_shopStock_userData" FromRole="userData" ToRole="shopStock" />
-          <NavigationProperty Name="login" Relationship="TacoDBModel.FK_userData_login1" FromRole="userData" ToRole="login" />
+          <Property Name="shopName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="learnedRecipes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="login" Relationship="Self.FK_userData_login1" FromRole="userData" ToRole="login" />
+          <NavigationProperty Name="shopStock" Relationship="Self.FK_shopStock_userData" FromRole="userData" ToRole="shopStock" />
         </EntityType>
-        <EntityContainer Name="TacoDBEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ingredients" EntityType="Self.ingredient" />
-          <EntitySet Name="logins" EntityType="Self.login" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="recipes" EntityType="Self.recipe" />
-          <EntitySet Name="userDatas" EntityType="Self.userData" />
-          <EntitySet Name="shopStocks" EntityType="TacoDBModel.shopStock" />
-          <AssociationSet Name="FK_shopStock_userData" Association="TacoDBModel.FK_shopStock_userData">
-            <End Role="userData" EntitySet="userDatas" />
-            <End Role="shopStock" EntitySet="shopStocks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_userData_login1" Association="TacoDBModel.FK_userData_login1">
-            <End Role="login" EntitySet="logins" />
-            <End Role="userData" EntitySet="userDatas" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="shopStock">
           <Key>
             <PropertyRef Name="owner_id" />
+            <PropertyRef Name="ingredient" />
+            <PropertyRef Name="stock" />
           </Key>
           <Property Name="owner_id" Type="Int32" Nullable="false" />
-          <Property Name="lettuce" Type="Int32" />
-          <Property Name="cheese" Type="Int32" />
-          <NavigationProperty Name="userData" Relationship="TacoDBModel.FK_shopStock_userData" FromRole="shopStock" ToRole="userData" />
-          <Property Name="soft_tortilla" Type="Int32" />
-          <Property Name="seasoned_beef" Type="Int32" />
+          <Property Name="ingredient" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ingredients" Relationship="Self.FK_shopStock_ingredients" FromRole="shopStock" ToRole="ingredients" />
+          <NavigationProperty Name="userData" Relationship="Self.FK_shopStock_userData" FromRole="shopStock" ToRole="userData" />
         </EntityType>
-        <Association Name="FK_shopStock_userData">
-          <End Type="TacoDBModel.userData" Role="userData" Multiplicity="1" />
-          <End Type="TacoDBModel.shopStock" Role="shopStock" Multiplicity="0..1" />
+        <Association Name="FK_shopStock_ingredients">
+          <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="userData">
-              <PropertyRef Name="id" />
+            <Principal Role="ingredients">
+              <PropertyRef Name="ingredient" />
             </Principal>
             <Dependent Role="shopStock">
-              <PropertyRef Name="owner_id" />
+              <PropertyRef Name="ingredient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_userData_login1">
-          <End Type="TacoDBModel.login" Role="login" Multiplicity="1" />
-          <End Type="TacoDBModel.userData" Role="userData" Multiplicity="0..1" />
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="userData" Type="Self.userData" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="login">
               <PropertyRef Name="id" />
@@ -214,6 +225,38 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_shopStock_userData">
+          <End Role="userData" Type="Self.userData" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shopStock">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TacoDBEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" />
+          <EntitySet Name="login" EntityType="Self.login" />
+          <EntitySet Name="recipes" EntityType="Self.recipes" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="userData" EntityType="Self.userData" />
+          <EntitySet Name="shopStock" EntityType="Self.shopStock" />
+          <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
+            <End Role="ingredients" EntitySet="ingredients" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userData_login1" Association="Self.FK_userData_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="userData" EntitySet="userData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shopStock_userData" Association="Self.FK_shopStock_userData">
+            <End Role="userData" EntitySet="userData" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -221,15 +264,15 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TacoDBModelStoreContainer" CdmEntityContainer="TacoDBEntity">
           <EntitySetMapping Name="ingredients">
-            <EntityTypeMapping TypeName="TacoDBModel.ingredient">
+            <EntityTypeMapping TypeName="TacoDBModel.ingredients">
               <MappingFragment StoreEntitySet="ingredients">
-                <ScalarProperty Name="ingredient1" ColumnName="ingredient" />
+                <ScalarProperty Name="ingredient" ColumnName="ingredient" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="logins">
+          <EntitySetMapping Name="login">
             <EntityTypeMapping TypeName="TacoDBModel.login">
               <MappingFragment StoreEntitySet="login">
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -239,8 +282,19 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="recipes">
+            <EntityTypeMapping TypeName="TacoDBModel.recipes">
+              <MappingFragment StoreEntitySet="recipes">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="ingredients" ColumnName="ingredients" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="TacoDBModel.sysdiagram">
+            <EntityTypeMapping TypeName="TacoDBModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -250,38 +304,25 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="recipes">
-            <EntityTypeMapping TypeName="TacoDBModel.recipe">
-              <MappingFragment StoreEntitySet="recipes">
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="displayName" ColumnName="displayName" />
-                <ScalarProperty Name="ingredients" ColumnName="ingredients" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="userDatas">
+          <EntitySetMapping Name="userData">
             <EntityTypeMapping TypeName="TacoDBModel.userData">
               <MappingFragment StoreEntitySet="userData">
-                <ScalarProperty Name="learnedRecipes" ColumnName="learnedRecipes" />
-                <ScalarProperty Name="shopName" ColumnName="shopName" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="creation" ColumnName="creation" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="money" ColumnName="money" />
                 <ScalarProperty Name="employees" ColumnName="employees" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="learnedRecipes" ColumnName="learnedRecipes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="shopStocks">
+          <EntitySetMapping Name="shopStock">
             <EntityTypeMapping TypeName="TacoDBModel.shopStock">
               <MappingFragment StoreEntitySet="shopStock">
-                <ScalarProperty Name="seasoned_beef" ColumnName="seasoned_beef" />
-                <ScalarProperty Name="soft_tortilla" ColumnName="soft_tortilla" />
-                <ScalarProperty Name="cheese" ColumnName="cheese" />
-                <ScalarProperty Name="lettuce" ColumnName="lettuce" />
                 <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="ingredient" ColumnName="ingredient" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -299,7 +340,7 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

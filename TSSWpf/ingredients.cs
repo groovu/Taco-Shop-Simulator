@@ -12,10 +12,19 @@ namespace TSSWpf
     using System;
     using System.Collections.Generic;
     
-    public partial class ingredient
+    public partial class ingredients
     {
-        public string ingredient1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ingredients()
+        {
+            this.shopStock = new HashSet<shopStock>();
+        }
+    
+        public string ingredient { get; set; }
         public string description { get; set; }
         public Nullable<decimal> cost { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<shopStock> shopStock { get; set; }
     }
 }
