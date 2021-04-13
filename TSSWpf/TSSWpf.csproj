@@ -87,9 +87,6 @@
     <Compile Include="ingredient.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ingrForRecipe.cs">
-      <DependentUpon>TacoDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="login.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>

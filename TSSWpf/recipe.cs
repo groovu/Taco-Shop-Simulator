@@ -14,9 +14,10 @@ namespace TSSWpf
     
     public partial class recipe
     {
-        public string recipeName { get; set; }
         public string description { get; set; }
-    
-        public virtual ingrForRecipe ingrForRecipe { get; set; }
+        public string name { get; set; }
+        public string ingredients { get; set; }
+        public string displayName { get; set; }
+        public decimal cost { get; set; }
     }
 }

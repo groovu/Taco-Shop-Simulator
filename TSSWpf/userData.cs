@@ -20,6 +20,7 @@ namespace TSSWpf
         public decimal money { get; set; }
         public int employees { get; set; }
         public string shopName { get; set; }
+        public string learnedRecipes { get; set; }
     
         public virtual shopStock shopStock { get; set; }
         public virtual login login { get; set; }

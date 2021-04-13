@@ -19,8 +19,6 @@ namespace TSSWpf
         public string password { get; set; }
         public bool admin { get; set; }
     
-        public virtual login login1 { get; set; }
-        public virtual login login2 { get; set; }
         public virtual userData userData { get; set; }
     }
 }

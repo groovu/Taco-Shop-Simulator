@@ -11,7 +11,8 @@ namespace TSSWpf
         public User Owner { get; set; }
         public string ShopName { get; set; }
         public Dictionary<ingredient, int> stock = new Dictionary<ingredient, int>();
-        public List<Employee> employees = new List<Employee>();
+        //public List<Employee> employees = new List<Employee>();
+        public int employees;
         public List<recipe> recipes = new List<recipe>();
         
         public Shop()

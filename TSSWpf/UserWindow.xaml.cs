@@ -31,10 +31,15 @@ namespace TSSWpf
             var test = db.userDatas.SingleOrDefault(i => i.id == id);
             this.db = db;
             user = GetUser(id);
-            //somehow load user data from userID.
             shop = GetShop(user);
             InitializeComponent();
             userLabel.Content = user.username;
+
+            //show shop name
+            //show ingridents
+            //show recipes
+            populateData(shop);
+
             this.Closed += new EventHandler(UserWindowClose);
             this.Closing += new CancelEventHandler(UserWindowConfirmClose);
         }
@@ -51,7 +56,12 @@ namespace TSSWpf
             user.username = userQ.username;
             user.employees = userQ.employees;
             user.money = userQ.money;
+            user.recipes = userQ.learnedRecipes;
             return user;
+        }
+        private void populateData(Shop shop)
+        {
+            currentStockGrid.ItemsSource = 
         }
         private Shop GetShop(User user)
         {
@@ -79,7 +89,7 @@ namespace TSSWpf
             //    var blah = property.GetValue(shopQ);
             //    //shop.stock.Add(property, shopQ.property.get);
             //}
-            String[] items2 = new string[] { "cheese", "lettuce", "seasoned beef" };
+            //String[] items2 = new string[] { "cheese", "lettuce", "seasoned beef" };
             List<string> list = (from a in db.ingredients select a.ingredient1).ToList();
 
             foreach (string s in list)
@@ -95,6 +105,21 @@ namespace TSSWpf
 
 
             }
+            //shop.employees = user.employees; //List<Employee>, employees not implemented yet.  maybe another time.
+            shop.employees = user.employees;
+
+            //List<string> recipeList = (from a in db.recipes)
+            List<string> knownRecipes = user.recipes.Split(',').ToList();
+            foreach (string recipe in knownRecipes)
+            {
+                var rec = db.recipes.Single(i => i.name == recipe);
+                if (rec == null)
+                {
+                    throw new Exception("recipe is missing from recipe db. bad name?");
+                }
+                shop.recipes.Add(rec);
+            }
+
             
             return shop;
         }

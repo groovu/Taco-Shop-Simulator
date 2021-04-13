@@ -13,6 +13,7 @@ namespace TSSWpf
         public string username { get; set; }
         public decimal money { get; set; }
         public int employees {get; set;}
+        public string recipes { get; set; }
 
         public User(int id, string username) //new User constructor
         {
