@@ -107,10 +107,17 @@ namespace TSSWpf
         private void initData(Shop shop)
         {
             currentStockGrid.ItemsSource = shop.StockPrint(); //show current stock.
-            placeOrderGrid.ItemsSource = allIngr; //WHY
+            placeOrderGrid.ItemsSource = placeOrderBuilder();
+            //var x = ObservableCollection();
+            //placeOrderGrid.Columns[1].IsReadOnly = false;
+            //placeOrderGrid.header
+            //placeOrderGrid.Columns[0].Header = "Ingredient";
+            //placeOrderGrid.Columns[1].Header = "Qty";
+            //placeOrderGrid.Columns[1].IsReadOnly = false;
 
             knownRecipesGrid.ItemsSource = shop.recipes; //shows know recipes
             //missing research grid
+            
         }
 
         private void researchClick(object sender, RoutedEventArgs e)
@@ -138,6 +145,34 @@ namespace TSSWpf
             //update user invetory with selected items
             //clear buy menu.
         }
+        private List<buyItem> placeOrderBuilder()
+        {
+            //2d array?
+            //all Ingredients
+            //IDictionary<string, int> menu = new Dictionary<string, int>();
+            //foreach (string i in allIngr)
+            //{
+            //    menu.Add(i, 0);
+            //}
+            List<buyItem> menu = new List<buyItem>();
+                foreach(string i in allIngr)
+            {
+                menu.Add(new buyItem { ingredient = i, qty = 0 });
+            }
+            
+            return menu;
+        }
+        public class buyItem
+        {
+            public string ingredient { get; set; }
+            public int qty { get; set; }
+            public buyItem()
+            {
+
+            }
+        }
+
+        
         private void getIngrAndRecipes()
         {
             allIngr = (from a in db.ingredients select a.ingredient).ToList(); // makes list of all ingredients
