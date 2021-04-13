@@ -37,7 +37,8 @@ namespace TSSWpf
             user = GetUser(id); //init user class
             shop = GetShop(user); //init shop from user
             InitializeComponent(); //default thingo
-            userLabel.Content = user.username; 
+            userLabel.Content = user.username;
+            moneyLabel.Content = user.money;
             initData(shop); //init UserWindow using shop.
 
             this.Closed += new EventHandler(UserWindowClose);
@@ -132,12 +133,27 @@ namespace TSSWpf
             //else display not successful.
         }
 
-        private void updateCost(object sender, RoutedEventArgs e)
+        private void updateCost(object sender, EventArgs e)
         {
             //method that should run whenever buy menu is updated with user input
             //should display what the cost is.
             //cost is calculated by query cost of ingredient from table
             //then doing count * cost, then sum them all up to return cost.
+            //placeOrderGrid.ItemsSource not yet updated?
+            List<buyItem> list = (List<buyItem>)placeOrderGrid.ItemsSource;
+            decimal cost = 0;
+            foreach(buyItem i in list)
+            {
+                string ing = i.Ingredient;
+                int qty = i.Qty;
+                var q = db.ingredients.SingleOrDefault(x => x.ingredient == ing);
+                if (q == null)
+                {
+                    throw new Exception("Error in update cost");
+                }
+                cost += (decimal)q.cost * qty;
+            }
+            costLabel.Content = cost;
         }
         private void buyClick(object sender, RoutedEventArgs e)
         {
@@ -157,15 +173,15 @@ namespace TSSWpf
             List<buyItem> menu = new List<buyItem>();
                 foreach(string i in allIngr)
             {
-                menu.Add(new buyItem { ingredient = i, qty = 0 });
+                menu.Add(new buyItem { Ingredient = i, Qty = 0 });
             }
             
             return menu;
         }
         public class buyItem
         {
-            public string ingredient { get; set; }
-            public int qty { get; set; }
+            public string Ingredient { get; set; }
+            public int Qty { get; set; }
             public buyItem()
             {
 
@@ -181,6 +197,15 @@ namespace TSSWpf
         void UserWindowClose(object sender, EventArgs e) //shows previous window when userWin closes.
         {
             //backup userdata to db.
+            //update shopstock
+            //update userData
+            var q = (from u in db.userData where u.id == user.id select u).SingleOrDefault();
+            if (q == null)
+            {
+                throw new Exception("user is missing from userData.");
+            }
+            q.money = user.money;
+            db.SaveChanges();
             prevWin.Show();
 
         }
@@ -190,6 +215,23 @@ namespace TSSWpf
             {
                 e.Cancel = true;
             }
+        }
+
+        private void placeOrderGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("changed");
+        }
+
+        private void placeOrderGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            //update placeOrder source?
+            placeOrderGrid.ItemsSource = placeOrderGrid.ItemsSource;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            user.money += 500;
+            moneyLabel.Content = user.money;
         }
     }
 }
