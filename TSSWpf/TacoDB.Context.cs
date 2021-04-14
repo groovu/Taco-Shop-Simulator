@@ -28,8 +28,8 @@ namespace TSSWpf
         public virtual DbSet<ingredients> ingredients { get; set; }
         public virtual DbSet<login> login { get; set; }
         public virtual DbSet<recipes> recipes { get; set; }
+        public virtual DbSet<shopStock> shopStock { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<userData> userData { get; set; }
-        public virtual DbSet<shopStock> shopStock { get; set; }
     }
 }

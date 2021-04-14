@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
 using System.Linq; //holy shit
 
+
 namespace TSSWpf
 {
     /// <summary>
@@ -14,11 +15,11 @@ namespace TSSWpf
         bool debug = true;
         TacoDBEntity db = new TacoDBEntity();
         //Global test = new Global(); //global db access how?  vs. passing the ref through each window
-       
 
         public MainWindow()
         {
             debugCheck(debug);
+            //debug1();
             InitializeComponent();
         }
 
@@ -71,6 +72,20 @@ namespace TSSWpf
         {
             loginUsernameBox.Clear();
             loginPasswordBox.Clear();
+        }
+        private void debug1()
+        {
+            shopStock example = (from u in db.shopStock where u.owner_id == 2 select u).FirstOrDefault();
+            shopStock test = new shopStock();
+            test.owner_id = 2;
+            test.ingredient = "hard_tortilla";
+            test.stock = 333;
+            //test.ingredients = (from u in db.ingredients where u.ingredient == "hard_tortilla" select u).FirstOrDefault();
+            //test.userData = (from u in db.userData where u.id == 2 select u).FirstOrDefault();
+            //test.ingredients = new ingredients();
+            //test.userData = new userData();
+            db.shopStock.Add(test);
+            db.SaveChanges();
         }
     }
 }

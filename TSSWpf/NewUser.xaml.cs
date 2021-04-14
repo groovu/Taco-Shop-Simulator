@@ -83,6 +83,8 @@ namespace TSSWpf
             newUser.username = n.username;
             newUser.money = 1000;
             newUser.employees = 0;
+            newUser.learnedRecipes = "";
+            //newUser.login = n;
             db.userData.Add(newUser);
             //db.SaveChanges();
         }

@@ -218,9 +218,10 @@ namespace TSSWpf
                     newItem.owner_id = user.id;
                     newItem.ingredient = ingr.Key;
                     newItem.stock = ingr.Value;
-                    newItem.ingredients = (from u in db.ingredients where u.ingredient == ingr.Key select u).FirstOrDefault();
-                    newItem.userData = (from u in db.userData where u.id == user.id select u).FirstOrDefault();
+                    //newItem.ingredients = (from u in db.ingredients where u.ingredient == ingr.Key select u).FirstOrDefault();
+                    //newItem.userData = (from u in db.userData where u.id == user.id select u).FirstOrDefault();
                     shopStock itemTest = (from u in db.shopStock where u.ingredient == "cheese" select u).FirstOrDefault();
+
                     db.shopStock.Add(newItem);
                     //throw new Exception("error fetching shopStock query.");
                 }

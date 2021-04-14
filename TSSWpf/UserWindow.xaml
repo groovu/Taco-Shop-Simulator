@@ -13,7 +13,7 @@
         <TabControl HorizontalAlignment="Left" Height="368" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
             <TabItem Header="Stock">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="currentStockGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0"/>
+                    <DataGrid x:Name="currentStockGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0" IsReadOnly="True"/>
                     <Label Content="Current Stock" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <DataGrid x:Name="placeOrderGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="347,26,0,0" AutoGenerateColumns="False" SourceUpdated="updateCost" SelectedCellsChanged="updateCost" CanUserAddRows="false">
                         <DataGrid.Columns>

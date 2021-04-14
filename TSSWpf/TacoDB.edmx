@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ingredients">
           <Key>
             <PropertyRef Name="ingredient" />
@@ -32,13 +32,10 @@
           <Property Name="displayName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'TacoDB.dbo.shopStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="shopStock">
           <Key>
             <PropertyRef Name="owner_id" />
             <PropertyRef Name="ingredient" />
-            <PropertyRef Name="stock" />
           </Key>
           <Property Name="owner_id" Type="int" Nullable="false" />
           <Property Name="ingredient" Type="varchar" MaxLength="100" Nullable="false" />
@@ -63,7 +60,7 @@ warning 6002: The table/view 'TacoDB.dbo.shopStock' does not have a primary key 
           <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="money" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="employees" Type="int" Nullable="false" />
-          <Property Name="shopName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="shopName" Type="varchar" MaxLength="100" />
           <Property Name="learnedRecipes" Type="text" />
         </EntityType>
         <Association Name="FK_shopStock_ingredients">
@@ -109,15 +106,9 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shopStock" EntityType="Self.shopStock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userData" EntityType="Self.userData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="shopStock" EntityType="Self.shopStock" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [shopStock].[owner_id] AS [owner_id], 
-    [shopStock].[ingredient] AS [ingredient], 
-    [shopStock].[stock] AS [stock]
-    FROM [dbo].[shopStock] AS [shopStock]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
             <End Role="ingredients" EntitySet="ingredients" />
             <End Role="shopStock" EntitySet="shopStock" />
@@ -131,8 +122,7 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
             <End Role="userData" EntitySet="userData" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TacoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -165,6 +155,17 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <Property Name="displayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="shopStock">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="ingredient" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="ingredient" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ingredients" Relationship="Self.FK_shopStock_ingredients" FromRole="shopStock" ToRole="ingredients" />
+          <NavigationProperty Name="userData" Relationship="Self.FK_shopStock_userData" FromRole="shopStock" ToRole="userData" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -184,22 +185,10 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="money" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="employees" Type="Int32" Nullable="false" />
-          <Property Name="shopName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="shopName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="learnedRecipes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="login" Relationship="Self.FK_userData_login1" FromRole="userData" ToRole="login" />
           <NavigationProperty Name="shopStock" Relationship="Self.FK_shopStock_userData" FromRole="userData" ToRole="shopStock" />
-        </EntityType>
-        <EntityType Name="shopStock">
-          <Key>
-            <PropertyRef Name="owner_id" />
-            <PropertyRef Name="ingredient" />
-            <PropertyRef Name="stock" />
-          </Key>
-          <Property Name="owner_id" Type="Int32" Nullable="false" />
-          <Property Name="ingredient" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="stock" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ingredients" Relationship="Self.FK_shopStock_ingredients" FromRole="shopStock" ToRole="ingredients" />
-          <NavigationProperty Name="userData" Relationship="Self.FK_shopStock_userData" FromRole="shopStock" ToRole="userData" />
         </EntityType>
         <Association Name="FK_shopStock_ingredients">
           <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
@@ -241,9 +230,9 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <EntitySet Name="ingredients" EntityType="Self.ingredients" />
           <EntitySet Name="login" EntityType="Self.login" />
           <EntitySet Name="recipes" EntityType="Self.recipes" />
+          <EntitySet Name="shopStock" EntityType="Self.shopStock" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="userData" EntityType="Self.userData" />
-          <EntitySet Name="shopStock" EntityType="Self.shopStock" />
           <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
             <End Role="ingredients" EntitySet="ingredients" />
             <End Role="shopStock" EntitySet="shopStock" />
@@ -293,6 +282,15 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="shopStock">
+            <EntityTypeMapping TypeName="TacoDBModel.shopStock">
+              <MappingFragment StoreEntitySet="shopStock">
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="ingredient" ColumnName="ingredient" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="TacoDBModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -317,15 +315,6 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="shopStock">
-            <EntityTypeMapping TypeName="TacoDBModel.shopStock">
-              <MappingFragment StoreEntitySet="shopStock">
-                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
-                <ScalarProperty Name="ingredient" ColumnName="ingredient" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -341,7 +330,7 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

@@ -12,7 +12,7 @@ namespace TSSWpf
         public static Dictionary<string, int> makeDict(List<String> list)
         {
             Dictionary<string, int> dict = new Dictionary<string, int>();
-            foreach(string s in list)
+            foreach (string s in list)
             {
                 dict.Add(s, 0);
             }
@@ -24,5 +24,7 @@ namespace TSSWpf
             List<string> ret = new List<string>();
             return ret;
         }
+        static TacoDBEntity db = new TacoDBEntity();
+
     }
 }
