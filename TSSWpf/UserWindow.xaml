@@ -37,7 +37,7 @@
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="knownRecipesGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0"/>
                     <Label Content="Known Recipes" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <xctk:CheckListBox x:Name="checkListBox" HorizontalAlignment="Left" Height="304" Margin="347,26,0,0" VerticalAlignment="Top" Width="180"/>
+                    <xctk:CheckListBox x:Name="makeRecipeBox" HorizontalAlignment="Left" Height="304" Margin="347,26,0,0" VerticalAlignment="Top" Width="180"/>
                     <Label Content="Research Recipes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,0,0,0"/>
                     <Label x:Name="researchStatus" Content="attempting recipe" HorizontalAlignment="Left" Margin="532,26,0,0" VerticalAlignment="Top" Width="224"/>
                     <Button Content="Attempt Recipe" HorizontalAlignment="Left" Margin="617,310,0,0" VerticalAlignment="Top" Width="89" Click="researchClick"/>
@@ -46,9 +46,52 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label x:Name="moneyLabel" Content="Label" HorizontalAlignment="Left" Margin="617,383,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="moneyLabel" Content="Money" HorizontalAlignment="Left" Margin="617,383,0,0" VerticalAlignment="Top"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="340,386,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-
+        <Grid x:Name="nameNewShopBox" Visibility="Collapsed">
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+            MinWidth="250"
+            Background="#181735" 
+            BorderBrush="Black" 
+            BorderThickness="1" 
+            CornerRadius="10,10,10,10" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Margin="5" Text="Welcome to Taco Shop Simulator, what is your shop's name?" FontWeight="Medium" FontFamily="Fonts/#Dosis" FontSize="14" Foreground="White"/>
+                    <TextBox MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="YesButton" Margin="5" Content="Enter" Click="nameNewShop">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                                    <Setter Property="Background" Value="#FE6584"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF4c70"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    
+                                </Style>
+                            </Button.Style>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="30" Height="20"
+                                    HorizontalAlignment="Right"
+                                    Background="White">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Label x:Name="shopNameLabel" Content="Shop Name" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top"/>
     </Grid>
 
 </Window>

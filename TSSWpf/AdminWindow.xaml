@@ -11,15 +11,20 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
+
+            <TabItem Header="Ingredients">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="adminIngrGrid" HorizontalAlignment="Left" Height="185" VerticalAlignment="Top" Width="766"/>
+                    <xctk:WatermarkTextBox x:Name="AddIngredientBox" HorizontalAlignment="Left" Height="23" Margin="10,257,0,0" TextWrapping="Wrap" Watermark="Name" VerticalAlignment="Top" Width="120" />
+                    <xctk:WatermarkTextBox x:Name="AddDescrIngrBox" HorizontalAlignment="Left" Height="23" Margin="10,285,0,0" TextWrapping="Wrap" Watermark="Description" VerticalAlignment="Top" Width="120"/>
+                    <xctk:WatermarkTextBox x:Name="AddCostIngrBox" HorizontalAlignment="Left" Height="23" Margin="10,313,0,0" TextWrapping="Wrap" Watermark="Cost" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="adminAddIngrButton" Content="Add Ingredient" HorizontalAlignment="Left" Margin="10,341,0,0" VerticalAlignment="Top" Width="120" Click="adminAddIngrButton_Click"/>
+                </Grid>
+            </TabItem>
             <TabItem Header="Users">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="adminUserGrid" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="766">
                     </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Ingredients">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="adminIngrGrid" HorizontalAlignment="Left" Height="185" VerticalAlignment="Top" Width="766"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Recipes" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">

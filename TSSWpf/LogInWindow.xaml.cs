@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
 using System.Linq; //holy shit
-
+using System.Windows.Media;
 
 namespace TSSWpf
 {
@@ -86,6 +86,50 @@ namespace TSSWpf
             //test.userData = new userData();
             db.shopStock.Add(test);
             db.SaveChanges();
+        }
+
+        private void exitTSS(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+
+        private void registerClick(object sender, RoutedEventArgs e)
+        {
+            //slide up text boxes
+            //unhide verify password box
+            //change login in button to sign up button.
+            //change register to cancel.
+
+            //registerButton.Margin = new Thickness(0, 10, 0, 0);
+            //registerButton.RenderTransform = new TranslateTransform(0, 10);
+            //var x = registerButton.RenderTransform;
+            //var y = registerButton.Margin;
+            //if (registerButton.Margin == new Thickness(0,0,0,0))
+            //{
+            //    registerButton.Margin = new Thickness(0, 10, 0, 0);
+            //} else
+            //{
+            //    registerButton.Margin = new Thickness(0, 0, 0, 0);
+            //}
+
+            //if(buttonStackPanel.Margin.Top == 15)
+            //{
+            //    buttonStackPanel.Margin = new Thickness(Top = 50);
+            //} else
+            //{
+            //    buttonStackPanel.Margin = new Thickness(Top = 15);
+            //}
+            //if(registerButton.Margin.Top == 10)
+            //{
+            //    registerButton.Margin = new Thickness(Top = 30);
+            //} else
+            //{
+            //    registerButton.Margin = new Thickness(Top = 10);
+            //}
+            Window signUpWin = new NewUser(db, this);
+            signUpWin.Show();
+
         }
     }
 }

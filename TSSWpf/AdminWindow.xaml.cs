@@ -22,9 +22,11 @@ namespace TSSWpf
     public partial class AdminWindow : Window
     {
         MainWindow prevWindow;
-        public AdminWindow(TacoDBEntity db, MainWindow window)
+        TacoDBEntity db;
+        public AdminWindow(TacoDBEntity database, MainWindow window)
         {
             InitializeComponent();
+            db = database;
             prevWindow = window;
             this.Closed += new EventHandler(AdminWindowClose);
 
@@ -47,6 +49,17 @@ namespace TSSWpf
         {
             //System.Windows.MessageBox.Show("Closing window");
             prevWindow.Show();
+        }
+
+        private void adminAddIngrButton_Click(object sender, RoutedEventArgs e)
+        {
+            string ingr = AddIngredientBox.Text;
+            string desc = AddDescrIngrBox.Text;
+            decimal cost = Decimal.Parse(AddCostIngrBox.Text);
+            var q = new ingredients();
+            q.ingredient = ingr; q.description = desc; q.cost = cost;
+            db.ingredients.Add(q);
+            db.SaveChanges();
         }
     }
 }

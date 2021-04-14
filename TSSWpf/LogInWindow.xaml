@@ -6,18 +6,183 @@
         xmlns:local="clr-namespace:TSSWpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Log In" Height="500" Width="500"
-        WindowStartupLocation="CenterScreen">
+        Title="Log In" Height="500" Width="900"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle ="None"
+        ResizeMode="NoResize"
+        Background="#181735">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Background="#0f0f2d" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Taco Shop Simulator" Foreground="White"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontFamily="Fonts/#Dosis"
+                       FontWeight="Medium" Grid.ColumnSpan="3" Margin="10,5,28,5" Width="112"/>
+            <Button Content="X"
+                        Foreground="White"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Margin="0,0,0,0"
+                    Grid.Column="12" Click="exitTSS">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                        <Setter Property="Background" Value="#FE6584"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4c70"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="25" Height="25"
+                                    HorizontalAlignment="Right"
+                                    Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="60">
+            <StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,10,0,0"
+                            HorizontalAlignment="Center">
+                    <Image Width="50" Height="50"
+                       Source="Images/taco.png"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                    <TextBlock Text="Taco Shop Simulator"
+                           Foreground="White"
+                           FontSize="20"
+                           FontWeight="Medium"
+                           VerticalAlignment="Center"
+                           FontFamily="Fonts/#Dosis"
+                               Margin="0,0,0,10"/>
+
+                </StackPanel>
+                <!--<TextBlock Text="YAYAYAYAYAYAYAYAYA"
+                       Foreground="White"
+                       FontSize="25"
+                       FontWeight="Medium"
+                       FontFamily="Fonts/#Dosis"
+                           Margin="0,10,0,10"/>-->
+                <xctk:WatermarkTextBox x:Name="loginUsernameBox" 
+                                       Height="23"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Watermark="Enter Username" 
+                                       Width="200"
+                                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                       />
+                <xctk:WatermarkPasswordBox x:Name="loginPasswordBox" 
+                                       Height="23"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Watermark="Enter Password" 
+                                       Width="200"
+                                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                           />
+
+
+            </StackPanel>
+            <StackPanel x:Name="buttonStackPanel" Orientation="Horizontal"
+                        Margin="0,15,0,0"
+                        HorizontalAlignment="Center">
+                <Button Content="Start"
+                        Foreground="White"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Margin="0,0,10,0" Click="login_button_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                            <Setter Property="Background" Value="#FE6584"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF4c70"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="100" Height="25"
+                                    CornerRadius="12"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="registerButton" Content="Register"
+                        Foreground="White"
+                        FontSize="14"
+                        FontWeight="Medium" Click="registerClick"
+                        Margin="0,0,10,0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                            <Setter Property="Background" Value="#53484d"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3a3952"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="100" Height="25"
+                                    CornerRadius="12"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
         <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>
 
         <Button x:Name="login_button" Content="Log In" HorizontalAlignment="Left" Margin="246,280,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="login_button_Click" IsDefault="True"/>
         <Label Content="Don't have an account?" HorizontalAlignment="Left" Margin="146,325,0,0" VerticalAlignment="Top" Width="191"/>
         <Button x:Name="login_signupButton" Content="Sign Up" HorizontalAlignment="Left" Margin="289,329,0,0" VerticalAlignment="Top" Width="48" Background="Transparent" BorderThickness="0" Click="login_signupButton_Click"/>
-        <xctk:WatermarkTextBox x:Name="loginUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Enter Username" HorizontalAlignment="Left" Width="200"/>
-        <xctk:WatermarkPasswordBox x:Name="loginPasswordBox" HorizontalAlignment="Left" Height="23" Margin="146,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Enter Password"/>
+
         <Separator HorizontalAlignment="Left" Height="15" Margin="146,310,0,0" VerticalAlignment="Top" Width="200"/>
         <Label Content="Taco Shop Simulator" Margin="133,25,125,0" VerticalAlignment="Top" FontSize="24"/>
-
     </Grid>
 </Window>

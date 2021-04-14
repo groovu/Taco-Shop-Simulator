@@ -32,17 +32,35 @@ namespace TSSWpf
         //Utils u = Utils;
         public UserWindow(TacoDBEntity db, int id, MainWindow win)
         {
+
             prevWin = win; this.db = db; //sets previousWindow and db for use.
             getIngrAndRecipes(); //populates all ingredients and recipes from db.
             user = GetUser(id); //init user class
             shop = GetShop(user); //init shop from user
+
             InitializeComponent(); //default thingo
+            newUserCheck();
+            shopNameLabel.Content = shop.ShopName;
             userLabel.Content = user.username;
             moneyLabel.Content = user.money;
             initData(shop); //init UserWindow using shop.
 
             this.Closed += new EventHandler(UserWindowClose);
             this.Closing += new CancelEventHandler(UserWindowConfirmClose);
+        }
+        private void newUserCheck()
+        {
+            if (shop.ShopName == null)
+            {
+                //MessageBox.Show("Welcome to Taco Shop Simulator.  What is your shop's name?");
+                nameNewShopBox.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+        public void nameNewShop(object sender, RoutedEventArgs e)
+        {
+            nameNewShopBox.Visibility = System.Windows.Visibility.Collapsed;
+            shop.ShopName = InputTextBox.Text;
+            shopNameLabel.Content = shop.ShopName;
         }
 
         private User GetUser(int userID) //init User class using userData from table.
@@ -209,6 +227,7 @@ namespace TSSWpf
                 throw new Exception("user is missing from userData.");
             }
             q.money = user.money;
+            q.shopName = shop.ShopName;
             foreach(KeyValuePair<string, int> ingr in shop.StockPrint())
             {
                 var stockQ = (from u in db.shopStock where u.owner_id == user.id && u.ingredient == ingr.Key select u).SingleOrDefault();
