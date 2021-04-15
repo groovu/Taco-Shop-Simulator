@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ingredients">
+          <Key>
+            <PropertyRef Name="ingredient" />
+          </Key>
+          <Property Name="ingredient" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="varchar(max)" Nullable="false" />
+          <Property Name="admin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="int" Nullable="false" />
+          <Property Name="from_id" Type="int" Nullable="false" />
+          <Property Name="to_id" Type="int" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="message" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="recipes">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="ingredients" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="displayName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="shopStock">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="ingredient" />
+          </Key>
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="ingredient" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="userData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="creation" Type="datetime" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="money" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="employees" Type="int" Nullable="false" />
+          <Property Name="shopName" Type="varchar" MaxLength="100" />
+          <Property Name="learnedRecipes" Type="text" />
+        </EntityType>
+        <Association Name="FK_messages_login">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="from_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_login1">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="to_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shopStock_ingredients">
+          <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingredients">
+              <PropertyRef Name="ingredient" />
+            </Principal>
+            <Dependent Role="shopStock">
+              <PropertyRef Name="ingredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shopStock_userData">
+          <End Role="userData" Type="Self.userData" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shopStock">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_userData_login' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_userData_login" />-->
+        <Association Name="FK_userData_login1">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="userData" Type="Self.userData" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userData">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TacoDBModelStoreContainer">
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="messages" EntityType="Self.messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shopStock" EntityType="Self.shopStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userData" EntityType="Self.userData" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_messages_login" Association="Self.FK_messages_login">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_login1" Association="Self.FK_messages_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
+            <End Role="ingredients" EntitySet="ingredients" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shopStock_userData" Association="Self.FK_shopStock_userData">
+            <End Role="userData" EntitySet="userData" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userData_login1" Association="Self.FK_userData_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="userData" EntitySet="userData" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TacoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ingredients">
+          <Key>
+            <PropertyRef Name="ingredient" />
+          </Key>
+          <Property Name="ingredient" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="shopStock" Relationship="Self.FK_shopStock_ingredients" FromRole="ingredients" ToRole="shopStock" />
+        </EntityType>
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="messages" Relationship="Self.FK_messages_login" FromRole="login" ToRole="messages" />
+          <NavigationProperty Name="messages1" Relationship="Self.FK_messages_login1" FromRole="login" ToRole="messages" />
+          <NavigationProperty Name="userData" Relationship="Self.FK_userData_login1" FromRole="login" ToRole="userData" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="Int32" Nullable="false" />
+          <Property Name="from_id" Type="Int32" Nullable="false" />
+          <Property Name="to_id" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="login" Relationship="Self.FK_messages_login" FromRole="messages" ToRole="login" />
+          <NavigationProperty Name="login1" Relationship="Self.FK_messages_login1" FromRole="messages" ToRole="login" />
+        </EntityType>
+        <EntityType Name="recipes">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ingredients" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="shopStock">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="ingredient" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="ingredient" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ingredients" Relationship="Self.FK_shopStock_ingredients" FromRole="shopStock" ToRole="ingredients" />
+          <NavigationProperty Name="userData" Relationship="Self.FK_shopStock_userData" FromRole="shopStock" ToRole="userData" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="userData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="creation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="money" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="employees" Type="Int32" Nullable="false" />
+          <Property Name="shopName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="learnedRecipes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="login" Relationship="Self.FK_userData_login1" FromRole="userData" ToRole="login" />
+          <NavigationProperty Name="shopStock" Relationship="Self.FK_shopStock_userData" FromRole="userData" ToRole="shopStock" />
+        </EntityType>
+        <Association Name="FK_shopStock_ingredients">
+          <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingredients">
+              <PropertyRef Name="ingredient" />
+            </Principal>
+            <Dependent Role="shopStock">
+              <PropertyRef Name="ingredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_login">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="from_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_login1">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="to_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userData_login1">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="userData" Type="Self.userData" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userData">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shopStock_userData">
+          <End Role="userData" Type="Self.userData" Multiplicity="1" />
+          <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shopStock">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TacoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" />
+          <EntitySet Name="login" EntityType="Self.login" />
+          <EntitySet Name="messages" EntityType="Self.messages" />
+          <EntitySet Name="recipes" EntityType="Self.recipes" />
+          <EntitySet Name="shopStock" EntityType="Self.shopStock" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="userData" EntityType="Self.userData" />
+          <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
+            <End Role="ingredients" EntitySet="ingredients" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_login" Association="Self.FK_messages_login">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_login1" Association="Self.FK_messages_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userData_login1" Association="Self.FK_userData_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="userData" EntitySet="userData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shopStock_userData" Association="Self.FK_shopStock_userData">
+            <End Role="userData" EntitySet="userData" />
+            <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TacoDBModelStoreContainer" CdmEntityContainer="TacoDBEntities">
+          <EntitySetMapping Name="ingredients">
+            <EntityTypeMapping TypeName="TacoDBModel.ingredients">
+              <MappingFragment StoreEntitySet="ingredients">
+                <ScalarProperty Name="ingredient" ColumnName="ingredient" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="login">
+            <EntityTypeMapping TypeName="TacoDBModel.login">
+              <MappingFragment StoreEntitySet="login">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="admin" ColumnName="admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages">
+            <EntityTypeMapping TypeName="TacoDBModel.messages">
+              <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="msg_id" ColumnName="msg_id" />
+                <ScalarProperty Name="from_id" ColumnName="from_id" />
+                <ScalarProperty Name="to_id" ColumnName="to_id" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipes">
+            <EntityTypeMapping TypeName="TacoDBModel.recipes">
+              <MappingFragment StoreEntitySet="recipes">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="ingredients" ColumnName="ingredients" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="shopStock">
+            <EntityTypeMapping TypeName="TacoDBModel.shopStock">
+              <MappingFragment StoreEntitySet="shopStock">
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="ingredient" ColumnName="ingredient" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TacoDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userData">
+            <EntityTypeMapping TypeName="TacoDBModel.userData">
+              <MappingFragment StoreEntitySet="userData">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="creation" ColumnName="creation" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="employees" ColumnName="employees" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="learnedRecipes" ColumnName="learnedRecipes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

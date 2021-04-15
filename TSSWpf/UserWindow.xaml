@@ -7,10 +7,19 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="TSSWpf.UserWindow"
         mc:Ignorable="d"
         Title="Taco Shop Simulator" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+            WindowStyle ="None"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Buttons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Label x:Name="userLabel" Content="username" HorizontalAlignment="Left" Margin="720,383,0,0" VerticalAlignment="Top"/>
-        <TabControl HorizontalAlignment="Left" Height="368" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
+        <TabControl HorizontalAlignment="Left" Height="368" Margin="100,10,0,0" VerticalAlignment="Top" Width="682">
             <TabItem Header="Stock">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="currentStockGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0" IsReadOnly="True"/>
@@ -19,7 +28,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Qty" Binding="{Binding Qty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            
+
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -73,7 +82,7 @@
                                             <Setter Property="Background" Value="#FF4c70"/>
                                         </Trigger>
                                     </Style.Triggers>
-                                    
+
                                 </Style>
                             </Button.Style>
                             <Button.Template>
@@ -91,7 +100,29 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <Label x:Name="shopNameLabel" Content="Shop Name" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label x:Name="shopNameLabel" Content="Shop Name" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="9">
+                <Button Content="—" VerticalAlignment="Top" Height="25" Width="25"/>
+                <Button Content="X" VerticalAlignment="Top" Height="25" Width="25" Click="userWindowClose" Style="{StaticResource Cancel}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
+                <Button Content="Home" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Buy" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Research" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Employees" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Upgrades" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Community" Height="70" Width="70" BorderThickness="0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 
 </Window>

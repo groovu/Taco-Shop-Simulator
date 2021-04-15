@@ -1,0 +1,21 @@
+﻿<Window x:Class="scratch_WPF.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:scratch_WPF"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+    <Grid>
+        <StackPanel Margin="0,0,725,0">
+            <Button Content="Button1" Width="75" Height="75"/>
+            <Button Content="Button1" Width="75" Height="75"/>
+            <Button Content="Button1" Width="75" Height="75"/>
+            <Button Content="Button1" Width="75" Height="75"/>
+            <Button Content="Button1" Width="75" Height="75"/>
+            <Button Content="Button1" Width="75" Height="75"/>
+
+        </StackPanel>
+        
+    </Grid>
+</Window>

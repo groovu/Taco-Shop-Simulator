@@ -277,6 +277,11 @@ namespace TSSWpf
             user.money += 500;
             moneyLabel.Content = user.money;
         }
+
+        private void userWindowClose(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 //var prop = shopQ.GetType().GetProperty(ingr);

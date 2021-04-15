@@ -8,15 +8,22 @@
         mc:Ignorable="d"
         Title="New User" Height="500" Width="500"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Buttons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
 
         <Rectangle Fill="#FFF4F4F5" Height="150" Margin="125,210,125,0" Stroke="Black" VerticalAlignment="Top"/>
 
-        <Button x:Name="signUpButton" Content="Sign up" HorizontalAlignment="Left" Margin="246,308,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="signUpClick"/>
-        <xctk:WatermarkTextBox x:Name="signupUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Choose Username" HorizontalAlignment="Left" Width="200"/>
-        <xctk:WatermarkPasswordBox x:Name="signupPasswordBox" HorizontalAlignment="Left" Height="23" Margin="146,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Enter Password"/>
-        <xctk:WatermarkPasswordBox x:Name="signupPasswordConfirmBox" HorizontalAlignment="Left" Height="23" Margin="146,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Confirm Password"/>
-        <Button x:Name="signupCancel" Content="Cancel" HorizontalAlignment="Left" Margin="125,365,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Consolas" Click="cancelSignup" KeyboardNavigation.IsTabStop="False"/>
+        <Button x:Name="signUpButton" Content="Sign up" HorizontalAlignment="Left" Margin="246,308,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Fonts/#Dosis" Click="signUpClick" Style="{StaticResource Confirm}" Template="{StaticResource theTemp}"/>
+        <xctk:WatermarkTextBox x:Name="signupUsernameBox" Height="23" Margin="146,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Choose Username" HorizontalAlignment="Left" Width="200" HorizontalContentAlignment="Center"/>
+        <xctk:WatermarkPasswordBox x:Name="signupPasswordBox" HorizontalAlignment="Left" Height="23" Margin="146,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Enter Password" HorizontalContentAlignment="Center"/>
+        <xctk:WatermarkPasswordBox x:Name="signupPasswordConfirmBox" HorizontalAlignment="Left" Height="23" Margin="146,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Watermark="Confirm Password" HorizontalContentAlignment="Center"/>
+        <Button x:Name="signupCancel" Content="Cancel" HorizontalAlignment="Left" Margin="125,365,0,0" VerticalAlignment="Top" Width="100" Height="25" FontFamily="Fonts/#Dosis" Click="cancelSignup" KeyboardNavigation.IsTabStop="False" Style="{StaticResource Cancel}" Template="{StaticResource theTemp}"/>
 
     </Grid>
 </Window>

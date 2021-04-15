@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="41eb7afe10cd43e7a98edb34f777e562" Name="Diagram1">
+        <EntityTypeShape EntityType="TacoDBModel.ingredients" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.login" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.messages" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.recipes" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.shopStock" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TacoDBModel.userData" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="TacoDBModel.FK_shopStock_ingredients" ManuallyRouted="false" />
+        <AssociationConnector Association="TacoDBModel.FK_messages_login" ManuallyRouted="false" />
+        <AssociationConnector Association="TacoDBModel.FK_messages_login1" ManuallyRouted="false" />
+        <AssociationConnector Association="TacoDBModel.FK_userData_login1" ManuallyRouted="false" />
+        <AssociationConnector Association="TacoDBModel.FK_shopStock_userData" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
