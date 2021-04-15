@@ -32,6 +32,9 @@ namespace TSSWpf
                 a.Add(i);
             }
             //msgBox.ItemsSource = a;
+            var q = (from u in db.login where u.id == id select u).FirstOrDefault();
+            this.Title = "Messenger " + q.username;
+            populateMessageList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -53,6 +56,8 @@ namespace TSSWpf
                 return;
             }
             userNameLabel.Content = q.username;
+            refreshMessagePanel();
+            populateMessageList();
             //query messages db to see if msgs already exist.
             //if true, then populate.
 
@@ -82,6 +87,7 @@ namespace TSSWpf
             db.SaveChanges();
             sendMessageBox.Clear();
             refreshMessagePanel();
+            populateMessageList();
         }
         private void refreshMessagePanel()
         {
@@ -110,15 +116,85 @@ namespace TSSWpf
             foreach(messages m in x)
             {
                 TextBlock block = new TextBlock();
+                TextBlock timeStamp = new TextBlock();
                 block.Text = m.message;
+                block.FontSize = 16;
+                block.Margin = new Thickness(5, 0, 0, 0);
+                timeStamp.Text = m.time.ToShortTimeString();
+                timeStamp.FontSize = 10;
+                timeStamp.Margin = block.Margin;
                 if (m.to_id != id)
                 {
                     block.HorizontalAlignment = HorizontalAlignment.Right;
+                    timeStamp.HorizontalAlignment = HorizontalAlignment.Right;
+                    block.Margin = new Thickness(0, 0, 5, 0);
+                    timeStamp.Margin = block.Margin;
                 }
 
                 messagePanel.Children.Add(block);
+                messagePanel.Children.Add(timeStamp);
+            }
+        }
+        private void populateMessageList()
+        {
+            msgUserList.Children.Clear(); //what's the best way to sort this by order of latest message?
+            var q = (from u in db.messages where u.from_id == id || u.to_id == id select u); //select all messages related to user.
+            List<int> ids = new List<int>();
+            foreach(messages m in q)
+            {
+                int fromID = m.from_id;
+                int toID = m.to_id;
+                if (fromID != id || toID != id) //redundant w/e
+                {
+                    if (ids.Contains(fromID) || ids.Contains(toID)) //id already in list, skip
+                    {
+                        continue;
+                    }
+                    if (fromID == id) //user was sender.
+                    {
+                        var id1 = (from u in db.login where u.id == toID select u.id).FirstOrDefault() ;
+                        ids.Add(id1);
+                    } else //user was receive
+                    {
+                        var id2 = (from u in db.login where u.id == fromID select u.id).FirstOrDefault();
+                        ids.Add(id2);
+                    }
+                }
+            }
+            //at this point, you should have a list of ids where user has had messages with.
+            //now populate left message list.
+            foreach(int i in ids)
+            {
+                var username = (from u in db.login where u.id == i select u.username).FirstOrDefault();
+                Button msgUserButton = new Button();
+                msgUserButton.Content = username;
+                msgUserButton.Click += clickUserShowMessages;
+                msgUserList.Children.Add(msgUserButton);
             }
 
+        }
+        // what was the point of this again?
+        private void getMessages(object sender, RoutedEventArgs e, string username)
+        {
+            var q = (from u in db.login where u.username == username select u).FirstOrDefault();
+            if (q == null)
+            {
+                MessageBox.Show("User does not exist.");
+                return;
+            }
+            userNameLabel.Content = q.username;
+            refreshMessagePanel();
+            populateMessageList();
+            //query messages db to see if msgs already exist.
+            //if true, then populate.
+
+        }
+
+        private void clickUserShowMessages(object sender, RoutedEventArgs e)
+        {
+            string test = (sender as Button).Content.ToString();
+            userNameLabel.Content = test;
+            refreshMessagePanel();
         }
     }
 }

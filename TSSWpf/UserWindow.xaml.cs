@@ -40,13 +40,22 @@ namespace TSSWpf
 
             InitializeComponent(); //default thingo
             newUserCheck();
-            shopNameLabel.Content = shop.ShopName;
-            userLabel.Content = user.username;
-            moneyLabel.Content = user.money;
+
             initData(shop); //init UserWindow using shop.
+
+            hideAllGroups();
+            setUpLabels();
+            homeGroup.Visibility = Visibility.Visible;
 
             this.Closed += new EventHandler(UserWindowClose);
             this.Closing += new CancelEventHandler(UserWindowConfirmClose);
+        }
+        private void setUpLabels()
+        {
+            shopNameLabel.Content = shop.ShopName;
+            userLabel.Content = user.username;
+            moneyLabel.Content = user.money;
+            titleBarLabel.Content = user.shopName;
         }
         private void newUserCheck()
         {
@@ -302,6 +311,120 @@ namespace TSSWpf
             MsgWin.Show();
             //show message window or w/e.
         }
+
+        private void showHome(object sender, RoutedEventArgs e)
+        {
+            //return home;
+            hideAllGroups();
+            homeGroup.Visibility = Visibility.Visible;
+        }
+
+        private void showBuy(object sender, RoutedEventArgs e)
+        {
+            if (buyEquipmentButton.Visibility == Visibility.Visible)
+            {
+                buyIngredientsButton.Visibility = Visibility.Hidden;
+                buyEquipmentButton.Visibility = Visibility.Hidden;
+                return;
+            }
+            buyIngredientsButton.Visibility = Visibility.Visible;
+            buyEquipmentButton.Visibility = Visibility.Visible;
+        }
+
+        private void showResearch(object sender, RoutedEventArgs e)
+        {
+            if (researchRecipesButton.Visibility == Visibility.Visible)
+            {
+                researchRecipesButton.Visibility = Visibility.Hidden;
+                researchTechniquesButton.Visibility = Visibility.Hidden;
+                return;
+            }
+            researchRecipesButton.Visibility = Visibility.Visible;
+            researchTechniquesButton.Visibility = Visibility.Visible;
+        }
+
+        private void showEmployee(object sender, RoutedEventArgs e)
+        {
+            if (hireButton.Visibility == Visibility.Visible)
+            {
+                hireButton.Visibility = Visibility.Hidden;
+                viewEmpButton.Visibility = Visibility.Hidden;
+                return;
+            }
+            hireButton.Visibility = Visibility.Visible;
+            viewEmpButton.Visibility = Visibility.Visible;
+        }
+
+        private void showUpgrades(object sender, RoutedEventArgs e)
+        {
+            if (adsButton.Visibility == Visibility.Visible)
+            {
+                adsButton.Visibility = Visibility.Hidden;
+                locationButton.Visibility = Visibility.Hidden;
+                return;
+            }
+            adsButton.Visibility = Visibility.Visible;
+            locationButton.Visibility = Visibility.Visible;
+        }
+        private void hideAllGroups()
+        {
+            var v = Visibility.Hidden;
+            buyIngredientsGroup.Visibility = v;
+            buyEquipmentGroup.Visibility = v;
+            homeGroup.Visibility = v;
+            researchRecipeGroup.Visibility = v;
+            researchTecniquesGroup.Visibility = v;
+        }
+
+        private void buyIngredientsButton_Click(object sender, RoutedEventArgs e)
+        {
+            hideAllGroups();
+            buyIngredientsGroup.Visibility = Visibility.Visible;
+            showBuy(sender, e);
+        }
+
+        private void buyEquipmentButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void researchRecipesButton_Click(object sender, RoutedEventArgs e)
+        {
+            hideAllGroups();
+            researchRecipeGroup.Visibility = Visibility.Visible;
+            showResearch(sender, e);
+        }
+
+        private void researchTechniquesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void hireButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void viewEmpButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void locationButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void adsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void leaderboardButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
 //var prop = shopQ.GetType().GetProperty(ingr);

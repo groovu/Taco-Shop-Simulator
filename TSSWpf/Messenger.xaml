@@ -32,17 +32,18 @@
             <Label x:Name="userNameLabel" Content="" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="550" FontFamily="Fonts/#Dosis" FontSize="25"/>
         </StackPanel>
         <StackPanel x:Name="sendMessagePanel" Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <xctk:WatermarkTextBox x:Name="sendMessageBox" TextWrapping="Wrap" Watermark="Type your message" Height="75" Width="450"/>
-            <Button Content="Send" Width="100" Click="sendMessage"/>
+            <xctk:WatermarkTextBox x:Name="sendMessageBox" TextWrapping="Wrap" Watermark="Type your message" Height="75" Width="450" BorderThickness="0"/>
+            <Button Content="Send" Width="100" Click="sendMessage" Style="{StaticResource Confirm}" Template="{StaticResource messageTemplate}"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="msgUserList">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Message}">
                         <Setter Property="Template" Value="{StaticResource messageTemplate}"/>
+                        <Setter Property="FontSize" Value="16"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button Content="Hello"/>
+                <Button x:Name="testButton" Content="Hello" Click="clickUserShowMessages"/>
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="0,0,0,80">

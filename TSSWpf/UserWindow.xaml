@@ -18,45 +18,23 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Label x:Name="userLabel" Content="username" HorizontalAlignment="Left" Margin="720,383,0,0" VerticalAlignment="Top"/>
-        <TabControl HorizontalAlignment="Left" Height="368" Margin="100,10,0,0" VerticalAlignment="Top" Width="682">
+        <Label x:Name="userLabel" Content="username" HorizontalAlignment="Left" Margin="600,-446,0,0" VerticalAlignment="Top"/>
+        <TabControl HorizontalAlignment="Left" Height="368" Margin="100,-400,0,0" VerticalAlignment="Top" Width="682">
             <TabItem Header="Stock">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="currentStockGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0" IsReadOnly="True"/>
                     <Label Content="Current Stock" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <DataGrid x:Name="placeOrderGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="347,26,0,0" AutoGenerateColumns="False" SourceUpdated="updateCost" SelectedCellsChanged="updateCost" CanUserAddRows="false">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Qty" Binding="{Binding Qty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        </DataGrid.Columns>
-                    </DataGrid>
 
-                    <Label Content="Place Order" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,0,0,0"/>
-                    <Button Content="Buy" HorizontalAlignment="Left" Margin="601,320,0,0" VerticalAlignment="Top" Width="75" Click="buyClick" />
-                    <Label HorizontalAlignment="Left" Margin="696,220,0,0" VerticalAlignment="Top">
-                        <Label Content="Cost:"/>
-                    </Label>
-                    <Label x:Name="costLabel" HorizontalAlignment="Left" Margin="696,256,0,0" VerticalAlignment="Top">
-                        <Label Content="$ 0"/>
-                    </Label>
                 </Grid>
             </TabItem>
             <TabItem Header="Recipes">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="knownRecipesGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,26,0,0"/>
-                    <Label Content="Known Recipes" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <xctk:CheckListBox x:Name="makeRecipeBox" HorizontalAlignment="Left" Height="304" Margin="347,26,0,0" VerticalAlignment="Top" Width="180"/>
-                    <Label Content="Research Recipes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,0,0,0"/>
-                    <Label x:Name="researchStatus" Content="attempting recipe" HorizontalAlignment="Left" Margin="532,26,0,0" VerticalAlignment="Top" Width="224"/>
-                    <Button Content="Attempt Recipe" HorizontalAlignment="Left" Margin="617,310,0,0" VerticalAlignment="Top" Width="89" Click="researchClick"/>
-                    <Label x:Name="researchRecipeName" Content="recipe name" HorizontalAlignment="Left" Margin="532,70,0,0" VerticalAlignment="Top" Width="224"/>
-                    <Label x:Name="researchDescription" Content="recipe description" HorizontalAlignment="Left" Margin="532,136,0,0" VerticalAlignment="Top" Width="224" Height="169"/>
+
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label x:Name="moneyLabel" Content="Money" HorizontalAlignment="Left" Margin="617,383,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="340,386,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Label x:Name="moneyLabel" Content="Money" HorizontalAlignment="Left" Margin="720,405,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="20"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="655,485,0,-55" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Grid x:Name="nameNewShopBox" Visibility="Collapsed">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
@@ -109,31 +87,82 @@
                 <RowDefinition Height="25"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <Label x:Name="titleBarLabel" Content="Username's Shop Name" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="750"/>
             <Label x:Name="shopNameLabel" Content="Shop Name" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="9">
                 <Button Content="—" VerticalAlignment="Top" Height="25" Width="25"/>
                 <Button Content="X" VerticalAlignment="Top" Height="25" Width="25" Click="userWindowClose" Style="{StaticResource Cancel}"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-                <Button Content="Home" Height="70" Width="70" BorderThickness="0"/>
-                <Button Content="Buy" Height="70" Width="70" BorderThickness="0"/>
-                <Button Content="Research" Height="70" Width="70" BorderThickness="0"/>
-                <Button Content="Employees" Height="70" Width="70" BorderThickness="0"/>
-                <Button Content="Upgrades" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Home" Height="70" Width="70" BorderThickness="0" Click="showHome"/>
+                <Button Content="Buy" Height="70" Width="70" BorderThickness="0" Click="showBuy"/>
+                <Button Content="Research" Height="70" Width="70" BorderThickness="0" Click="showResearch"/>
+                <Button Content="Employees" Height="70" Width="70" BorderThickness="0" Click="showEmployee"/>
+                <Button Content="Upgrades" Height="70" Width="70" BorderThickness="0" Click="showUpgrades"/>
                 <Button Content="Community" Height="70" Width="70" BorderThickness="0" Click="communityClick"/>
             </StackPanel>
+            <GroupBox Grid.Column="1" x:Name="homeGroup" Header="Home" HorizontalAlignment="Left" Height="415" Grid.Row="1" VerticalAlignment="Top" Width="715" Margin="5,0,0,0" Visibility="Visible">
+                <StackPanel Margin="10,10,0,0">
+                    <TextBlock Text="Hey there boss!" FontSize="20" FontFamily="Fonts/#Dosis" FontWeight="Medium"/>
+                    <TextBlock Text="You currently have $Money." FontSize="20" FontFamily="Fonts/#Dosis" FontWeight="Medium"/>
+                    <TextBlock Text="# employees are working this week." FontSize="20" FontFamily="Fonts/#Dosis" FontWeight="Medium"/>
+                    <TextBlock Text="Placeholder for logs, events, stats." FontSize="20" FontFamily="Fonts/#Dosis" FontWeight="Medium"/>
+                    <Button Content="Start the Week" Margin="10,200,10,10" Height="50" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox x:Name="buyIngredientsGroup" Grid.Column="1" Header="Buy Ingredients" HorizontalAlignment="Left" Height="415" Grid.Row="1" VerticalAlignment="Top" Width="715" Margin="5,0,0,0" Visibility="Hidden">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Current Stock                                                       Order"/>
+                    <StackPanel Orientation="Horizontal">
+                        <DataGrid x:Name="currentStockGrid" HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="200" Margin="0,0,0,0" IsReadOnly="True"/>
+                        <DataGrid x:Name="placeOrderGrid" HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="307" Margin="50,0,0,0" AutoGenerateColumns="False" SourceUpdated="updateCost" SelectedCellsChanged="updateCost" CanUserAddRows="false">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Qty" Binding="{Binding Qty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Height="373" Width="147">
+                            <Label HorizontalAlignment="Center" Content="Cost:"/>
+                            <Label x:Name="costLabel" HorizontalAlignment="Center" Content="$ 0" FontSize="20" FontFamily="Font/#Dosis"/>
+                            <Button Content="Buy" VerticalAlignment="Top" Width="75" Click="buyClick" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox x:Name="buyEquipmentGroup" Grid.Column="1" Header="Buy ingredients" HorizontalAlignment="Left" Height="415" Grid.Row="1" VerticalAlignment="Top" Width="715" Margin="5,0,0,0" Visibility="Hidden">
+                <Label Content="Not yet implemented!" FontSize="30"></Label>
+            </GroupBox>
+            <GroupBox x:Name="researchTecniquesGroup" Grid.Column="1" Header="Buy ingredients" HorizontalAlignment="Left" Height="415" Grid.Row="1" VerticalAlignment="Top" Width="715" Margin="5,0,0,0" Visibility="Hidden">
+            </GroupBox>
+            <GroupBox x:Name="researchRecipeGroup" Grid.Column="1" Header="Research Recipes" HorizontalAlignment="Left" Height="415" Grid.Row="1" VerticalAlignment="Top" Width="715" Margin="5,0,0,0" Visibility="Hidden">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Known Recipes                                                                                     Attempt Recipe"/>
+                    <StackPanel Orientation="Horizontal">
+                        <DataGrid x:Name="knownRecipesGrid" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="307" Margin="0,0,0,0"/>
+                        <xctk:CheckListBox x:Name="makeRecipeBox" HorizontalAlignment="Left" Height="304" Margin="50,0,0,0" VerticalAlignment="Top" Width="180"/>
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Research Recipes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0"/>
+                            <Label x:Name="researchStatus" Content="attempting recipe" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="224"/>
+                            <Button Content="Attempt Recipe" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="89" Click="researchClick"/>
+
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
             <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
                 <Button Content="nil" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
                 <Button Content="nil" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="buyIngredientsButton" Content="Ingredients" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="buyEquipmentButton" Content="Equipment" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="researchRecipesButton" Content="Recipes" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="researchTechniquesButton" Content="Techniques" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="hireButton" Content="Hire" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="viewEmpButton" Content="View / Train" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="locationButton" Content="Location" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="adsButton" Content="Ads" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
-                <Button x:Name="leaderboardButton" Content="Leaderboard" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="buyIngredientsButton" Content="Ingredients" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="buyIngredientsButton_Click"/>
+                <Button x:Name="buyEquipmentButton" Content="Equipment" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="buyEquipmentButton_Click"/>
+                <Button x:Name="researchRecipesButton" Content="Recipes" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="researchRecipesButton_Click"/>
+                <Button x:Name="researchTechniquesButton" Content="Techniques" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="researchTechniquesButton_Click"/>
+                <Button x:Name="hireButton" Content="Hire" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="hireButton_Click"/>
+                <Button x:Name="viewEmpButton" Content="View / Train" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="viewEmpButton_Click"/>
+                <Button x:Name="locationButton" Content="Location" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="locationButton_Click"/>
+                <Button x:Name="adsButton" Content="Ads" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="adsButton_Click"/>
+                <Button x:Name="leaderboardButton" Content="Leaderboard" Height="35" Width="70" BorderThickness="0" Visibility="Hidden" Click="leaderboardButton_Click"/>
                 <Button x:Name="messageButton" Content="Message" Height="35" Width="70" BorderThickness="0" Click="messageClick" Visibility="Hidden"/>
             </StackPanel>
         </Grid>
