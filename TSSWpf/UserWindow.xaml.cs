@@ -282,6 +282,26 @@ namespace TSSWpf
         {
             this.Close();
         }
+
+        private void communityClick(object sender, RoutedEventArgs e)
+        {
+            if (messageButton.Visibility == Visibility.Visible)
+            {
+                messageButton.Visibility = Visibility.Hidden;
+                leaderboardButton.Visibility = Visibility.Hidden;
+                return;
+            }
+            messageButton.Visibility = Visibility.Visible;
+            leaderboardButton.Visibility = Visibility.Visible;
+        }
+        private void messageClick(object sender, RoutedEventArgs e)
+        {
+            messageButton.Visibility = Visibility.Collapsed;
+            leaderboardButton.Visibility = Visibility.Collapsed;
+            Messenger MsgWin = new Messenger(db, user.id);
+            MsgWin.Show();
+            //show message window or w/e.
+        }
     }
 }
 //var prop = shopQ.GetType().GetProperty(ingr);

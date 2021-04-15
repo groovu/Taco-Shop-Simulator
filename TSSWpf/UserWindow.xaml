@@ -33,7 +33,7 @@
                     </DataGrid>
 
                     <Label Content="Place Order" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,0,0,0"/>
-                    <Button Content="Buy" HorizontalAlignment="Left" Margin="681,310,0,0" VerticalAlignment="Top" Width="75" Click="buyClick" />
+                    <Button Content="Buy" HorizontalAlignment="Left" Margin="601,320,0,0" VerticalAlignment="Top" Width="75" Click="buyClick" />
                     <Label HorizontalAlignment="Left" Margin="696,220,0,0" VerticalAlignment="Top">
                         <Label Content="Cost:"/>
                     </Label>
@@ -120,7 +120,21 @@
                 <Button Content="Research" Height="70" Width="70" BorderThickness="0"/>
                 <Button Content="Employees" Height="70" Width="70" BorderThickness="0"/>
                 <Button Content="Upgrades" Height="70" Width="70" BorderThickness="0"/>
-                <Button Content="Community" Height="70" Width="70" BorderThickness="0"/>
+                <Button Content="Community" Height="70" Width="70" BorderThickness="0" Click="communityClick"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
+                <Button Content="nil" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button Content="nil" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="buyIngredientsButton" Content="Ingredients" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="buyEquipmentButton" Content="Equipment" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="researchRecipesButton" Content="Recipes" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="researchTechniquesButton" Content="Techniques" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="hireButton" Content="Hire" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="viewEmpButton" Content="View / Train" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="locationButton" Content="Location" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="adsButton" Content="Ads" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="leaderboardButton" Content="Leaderboard" Height="35" Width="70" BorderThickness="0" Visibility="Hidden"/>
+                <Button x:Name="messageButton" Content="Message" Height="35" Width="70" BorderThickness="0" Click="messageClick" Visibility="Hidden"/>
             </StackPanel>
         </Grid>
     </Grid>

@@ -90,6 +90,12 @@
     <Compile Include="login.cs">
       <DependentUpon>TacoDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="messages.cs">
+      <DependentUpon>TacoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Messenger.xaml.cs">
+      <DependentUpon>Messenger.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewUser.xaml.cs">
       <DependentUpon>NewUser.xaml</DependentUpon>
     </Compile>
@@ -145,6 +151,10 @@
       <DependentUpon>LogInWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Messenger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,18 +186,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Fonts\Dosis.ttf" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <EntityDeploy Include="TacoDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TacoDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="TacoDB.edmx.diagram">
       <DependentUpon>TacoDB.edmx</DependentUpon>
+    </None>
+    <Resource Include="Fonts\Dosis.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +211,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\taco.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="TacoDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TacoDB.edmx</DependentUpon>
@@ -212,6 +224,5 @@
       <LastGenOutput>TacoDB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

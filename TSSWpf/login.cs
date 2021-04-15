@@ -14,11 +14,22 @@ namespace TSSWpf
     
     public partial class login
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public login()
+        {
+            this.messages = new HashSet<messages>();
+            this.messages1 = new HashSet<messages>();
+        }
+    
         public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public bool admin { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<messages> messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<messages> messages1 { get; set; }
         public virtual userData userData { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TacoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ingredients">
           <Key>
             <PropertyRef Name="ingredient" />
@@ -21,6 +21,16 @@
           <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="password" Type="varchar(max)" Nullable="false" />
           <Property Name="admin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="int" Nullable="false" />
+          <Property Name="from_id" Type="int" Nullable="false" />
+          <Property Name="to_id" Type="int" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="message" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="recipes">
           <Key>
@@ -63,6 +73,30 @@
           <Property Name="shopName" Type="varchar" MaxLength="100" />
           <Property Name="learnedRecipes" Type="text" />
         </EntityType>
+        <Association Name="FK_messages_login">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="from_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_login1">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="to_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_shopStock_ingredients">
           <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
           <End Role="shopStock" Type="Self.shopStock" Multiplicity="*" />
@@ -105,10 +139,19 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
         <EntityContainer Name="TacoDBModelStoreContainer">
           <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="messages" EntityType="Self.messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shopStock" EntityType="Self.shopStock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userData" EntityType="Self.userData" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_messages_login" Association="Self.FK_messages_login">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_login1" Association="Self.FK_messages_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
           <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
             <End Role="ingredients" EntitySet="ingredients" />
             <End Role="shopStock" EntitySet="shopStock" />
@@ -122,7 +165,8 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
             <End Role="userData" EntitySet="userData" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TacoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -143,7 +187,21 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="admin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="messages" Relationship="Self.FK_messages_login" FromRole="login" ToRole="messages" />
+          <NavigationProperty Name="messages1" Relationship="Self.FK_messages_login1" FromRole="login" ToRole="messages" />
           <NavigationProperty Name="userData" Relationship="Self.FK_userData_login1" FromRole="login" ToRole="userData" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="Int32" Nullable="false" />
+          <Property Name="from_id" Type="Int32" Nullable="false" />
+          <Property Name="to_id" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="login" Relationship="Self.FK_messages_login" FromRole="messages" ToRole="login" />
+          <NavigationProperty Name="login1" Relationship="Self.FK_messages_login1" FromRole="messages" ToRole="login" />
         </EntityType>
         <EntityType Name="recipes">
           <Key>
@@ -202,6 +260,30 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_messages_login">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="from_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_login1">
+          <End Role="login" Type="Self.login" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="to_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userData_login1">
           <End Role="login" Type="Self.login" Multiplicity="1" />
           <End Role="userData" Type="Self.userData" Multiplicity="0..1" />
@@ -229,6 +311,7 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
         <EntityContainer Name="TacoDBEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ingredients" EntityType="Self.ingredients" />
           <EntitySet Name="login" EntityType="Self.login" />
+          <EntitySet Name="messages" EntityType="Self.messages" />
           <EntitySet Name="recipes" EntityType="Self.recipes" />
           <EntitySet Name="shopStock" EntityType="Self.shopStock" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
@@ -236,6 +319,14 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
           <AssociationSet Name="FK_shopStock_ingredients" Association="Self.FK_shopStock_ingredients">
             <End Role="ingredients" EntitySet="ingredients" />
             <End Role="shopStock" EntitySet="shopStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_login" Association="Self.FK_messages_login">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_login1" Association="Self.FK_messages_login1">
+            <End Role="login" EntitySet="login" />
+            <End Role="messages" EntitySet="messages" />
           </AssociationSet>
           <AssociationSet Name="FK_userData_login1" Association="Self.FK_userData_login1">
             <End Role="login" EntitySet="login" />
@@ -268,6 +359,17 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="admin" ColumnName="admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages">
+            <EntityTypeMapping TypeName="TacoDBModel.messages">
+              <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="msg_id" ColumnName="msg_id" />
+                <ScalarProperty Name="from_id" ColumnName="from_id" />
+                <ScalarProperty Name="to_id" ColumnName="to_id" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="message" ColumnName="message" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -330,7 +432,7 @@ warning 6035: The relationship 'FK_userData_login' has columns that are not part
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

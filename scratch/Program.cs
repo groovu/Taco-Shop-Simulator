@@ -26,14 +26,27 @@ namespace scratch
             //result.blah = "1000";
             //taco.SaveChanges();
 
-            string username;
-            string password;
-            Console.WriteLine("Enter username:");
-            username = Console.ReadLine();
-            Console.WriteLine("Enter password:");
-            password = Console.ReadLine();
+            //string username;
+            //string password;
+            //Console.WriteLine("Enter username:");
+            //username = Console.ReadLine();
+            //Console.WriteLine("Enter password:");
+            //password = Console.ReadLine();
 
-           // var userTable = taco.users;
+            // var userTable = taco.users;
+            checkDb();
+        }
+        static public void checkDb()
+        {
+            TacoDBEntities db = new TacoDBEntities();
+            messages msg = new messages();
+            msg.from_id = 1;
+            msg.to_id = 2;
+            msg.time = DateTime.Now;
+            msg.message = "yo!";
+            msg.msg_id = 1;
+            db.messages.Add(msg);
+            db.SaveChanges();
         }
     }
 }
