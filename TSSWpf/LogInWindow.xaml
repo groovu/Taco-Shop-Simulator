@@ -98,7 +98,7 @@
                                        TextWrapping="Wrap"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       Watermark="Enter Username" 
+                                       Watermark="Username" 
                                        Width="200"
                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                        />
@@ -107,7 +107,7 @@
                                        TextWrapping="Wrap"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       Watermark="Enter Password" 
+                                       Watermark="Password" 
                                        Width="200"
                                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                            />
@@ -117,11 +117,11 @@
             <StackPanel x:Name="buttonStackPanel" Orientation="Horizontal"
                         Margin="0,15,0,0"
                         HorizontalAlignment="Center">
-                <Button Content="Start"
+                <Button Content="Login"
                         Foreground="White"
                         FontSize="14"
                         FontWeight="Medium"
-                        Margin="0,0,10,0" Click="login_button_Click">
+                        Margin="0,0,0,0" Click="login_button_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
@@ -149,7 +149,7 @@
                         Foreground="White"
                         FontSize="14"
                         FontWeight="Medium" Click="registerClick"
-                        Margin="0,0,10,0">
+                        Margin="10,0,0,0">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
