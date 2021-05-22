@@ -1,5 +1,9 @@
 # Taco Shop Simulator
 A taco shop management game.
+![image](https://user-images.githubusercontent.com/43489192/119241156-50d26e80-bb09-11eb-9c90-fbe5ae636be0.png)
+
+![image](https://user-images.githubusercontent.com/43489192/119241141-3a2c1780-bb09-11eb-8a37-7d7a7ea995a1.png)
+
 
 # Todo
 Admin View implemented, add functionality (update users, add ingredients, add recipes)
