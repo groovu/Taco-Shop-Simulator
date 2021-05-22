@@ -1,34 +1,16 @@
 # Taco Shop Simulator
-A taco shop management game.
+This is a shop management game written in C# using Windows Foundation Presentation, SQL Server, and Entity Framework.  Still a work in progress, but current it features a login/registration system, user and admin UI, purchasing inventory, and a chat system
 ![image](https://user-images.githubusercontent.com/43489192/119241156-50d26e80-bb09-11eb-9c90-fbe5ae636be0.png)
 
-![image](https://user-images.githubusercontent.com/43489192/119241141-3a2c1780-bb09-11eb-8a37-7d7a7ea995a1.png)
+![image](https://user-images.githubusercontent.com/43489192/119241179-7a8b9580-bb09-11eb-8b5d-572ba5b501fa.png)
 
 
 # Todo
-Admin View implemented, add functionality (update users, add ingredients, add recipes)
+Migrate to online database.
+Implement game logic (and how do I make it fun? lol)
 
-Figure out how to use an online database.  (How to migrate local db?)
 
-Implement buy menu
-
-Implement research menu
-
-Implement hiring / training menu
-
-Leaderboard?
-
-# Tables used
-
-login - username, password, and privledges
-
-userdata - username, money, employees, ...
-
-ingredients - ingredient, description
-
-recipes - name, ingredients required (how do you list them in a db?)
-
-# Game Logic
+# Game Logic Ideas
 Users run a taco shop.  Every week, the user can...
 	- hire / train employees
 	- move their location?
